@@ -27,7 +27,7 @@ export const teamData: TeamMember[] = [
     role: "member",
     university: "Bangladesh University of Business and Technology",
     email: "rasel@student.bubt.edu.bd",
-    image: "public/Rasel Mamun.jpg",
+    image: "/src/assets/Rasel Mamun.jpg",
   },
   {
     id: "3",
