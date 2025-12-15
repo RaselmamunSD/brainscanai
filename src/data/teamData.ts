@@ -18,7 +18,7 @@ export const teamData: TeamMember[] = [
     designation: "Assistant Professor",
     university: "Bangladesh University of Business and Technology",
     email: "aliazgor@bubt.edu.bd",
-    image: "",
+    image: "/src/assets/aliazgor.jpeg",
   },
   {
     id: "2",
