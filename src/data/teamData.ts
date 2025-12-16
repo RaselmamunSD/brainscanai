@@ -18,7 +18,7 @@ export const teamData: TeamMember[] = [
     designation: "Assistant Professor",
     university: "Bangladesh University of Business and Technology",
     email: "aliazgor@bubt.edu.bd",
-    image: "/src/assets/aliazgor.jpeg",
+    image: "/assets/aliazgor.jpeg",
   },
   {
     id: "2",
@@ -27,7 +27,7 @@ export const teamData: TeamMember[] = [
     role: "member",
     university: "Bangladesh University of Business and Technology",
     email: "rasel@student.bubt.edu.bd",
-    image: "/src/assets/Rasel Mamun.jpg",
+    image: "/assets/Rasel Mamun.jpg",
   },
   {
     id: "3",
@@ -36,7 +36,7 @@ export const teamData: TeamMember[] = [
     role: "member",
     university: "Bangladesh University of Business and Technology",
     email: "omar@student.bubt.edu.bd",
-    image: "/src/assets/Omer.jpeg",
+    image: "/assets/Omer.jpeg",
   },
   {
     id: "4",
@@ -45,7 +45,7 @@ export const teamData: TeamMember[] = [
     role: "member",
     university: "Bangladesh University of Business and Technology",
     email: "kazi@student.buet.edu.bd",
-    image: "/src/assets/kazi.jpeg",
+    image: "/assets/kazi.jpeg",
   },
   {
     id: "5",
@@ -54,7 +54,7 @@ export const teamData: TeamMember[] = [
     role: "member",
     university: "Bangladesh University of Business and Technology",
     email: "israt@student.buet.edu.bd",
-    image: "/src/assets/israt.jpeg",
+    image: "/assets/israt.jpeg",
   },
   {
     id: "6",
@@ -63,6 +63,6 @@ export const teamData: TeamMember[] = [
     role: "member",
     university: "Bangladesh University of Business and Technology",
     email: "shifat@student.buet.edu.bd",
-    image: "/src/assets/sifat.jpeg",
+    image: "/assets/sifat.jpeg",
   },
 ];
