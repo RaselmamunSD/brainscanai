@@ -57,29 +57,29 @@ const Upload = () => {
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           {/* Header */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <Link 
               to="/" 
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-4"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-3 sm:mb-4 text-sm sm:text-base"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
               Back to Home
             </Link>
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
               MRI Analysis
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-sm sm:text-base text-muted-foreground">
               Upload your brain MRI scan for AI-powered tumor detection and classification
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8">
             {/* Left Column - Upload & Controls */}
             <div className="space-y-6">
               {/* Upload Zone */}
-              <div className="bg-card p-6 rounded-2xl border border-border">
-                <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <Brain className="h-5 w-5 text-primary" />
+              <div className="bg-card p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-border">
+                <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4 flex items-center gap-2">
+                  <Brain className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                   Upload MRI Image
                 </h3>
                 
@@ -93,26 +93,26 @@ const Upload = () => {
 
               {/* Modality Selection */}
               {selectedFile && !result && (
-                <div className="bg-card p-6 rounded-2xl border border-border animate-fade-in">
-                  <h3 className="text-lg font-semibold text-foreground mb-4">
+                <div className="bg-card p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-border animate-fade-in">
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">
                     Select MRI Modality
                   </h3>
                   
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                     {modalities.map((modality) => (
                       <button
                         key={modality.value}
                         onClick={() => setSelectedModality(modality.value)}
                         disabled={isAnalyzing}
                         className={cn(
-                          "p-4 rounded-xl border-2 transition-all text-center",
+                          "p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all text-center",
                           selectedModality === modality.value
                             ? "border-primary bg-primary/10"
                             : "border-border hover:border-primary/50 hover:bg-muted"
                         )}
                       >
                         <div className={cn(
-                          "text-lg font-bold mb-1",
+                          "text-base sm:text-lg font-bold mb-1",
                           selectedModality === modality.value ? "text-primary" : "text-foreground"
                         )}>
                           {modality.label}
@@ -128,22 +128,22 @@ const Upload = () => {
 
               {/* Analysis Progress */}
               {isAnalyzing && (
-                <div className="bg-card p-6 rounded-2xl border border-border animate-fade-in">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 rounded-lg medical-gradient animate-pulse">
-                      <Brain className="h-5 w-5 text-primary-foreground" />
+                <div className="bg-card p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-border animate-fade-in">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                    <div className="p-1.5 sm:p-2 rounded-lg medical-gradient animate-pulse">
+                      <Brain className="h-4 w-4 sm:h-5 sm:w-5 text-primary-foreground" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-foreground">Analyzing MRI...</h3>
-                      <p className="text-sm text-muted-foreground">
+                      <h3 className="text-sm sm:text-base font-semibold text-foreground">Analyzing MRI...</h3>
+                      <p className="text-xs sm:text-sm text-muted-foreground">
                         {progress < 30 && "Preprocessing image..."}
                         {progress >= 30 && progress < 70 && "Running AI inference..."}
                         {progress >= 70 && "Generating results..."}
                       </p>
                     </div>
                   </div>
-                  <Progress value={progress} className="h-3" />
-                  <p className="text-sm text-muted-foreground mt-2 text-right">
+                  <Progress value={progress} className="h-2 sm:h-3" />
+                  <p className="text-xs sm:text-sm text-muted-foreground mt-2 text-right">
                     {progress.toFixed(0)}%
                   </p>
                 </div>
@@ -153,30 +153,30 @@ const Upload = () => {
               {selectedFile && !isAnalyzing && !result && (
                 <Button 
                   size="lg" 
-                  className="w-full medical-gradient h-14 text-lg"
+                  className="w-full medical-gradient h-12 sm:h-14 text-base sm:text-lg"
                   onClick={handleAnalyze}
                 >
-                  <Brain className="mr-2 h-5 w-5" />
+                  <Brain className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   Start AI Analysis
                 </Button>
               )}
 
               {result && (
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <Button 
                     size="lg" 
                     variant="outline"
-                    className="flex-1 h-14"
+                    className="flex-1 h-12 sm:h-14 text-sm sm:text-base"
                     onClick={handleNewAnalysis}
                   >
-                    <RefreshCw className="mr-2 h-5 w-5" />
+                    <RefreshCw className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                     New Analysis
                   </Button>
                   <Button 
                     size="lg" 
-                    className="flex-1 medical-gradient h-14"
+                    className="flex-1 medical-gradient h-12 sm:h-14 text-sm sm:text-base"
                   >
-                    <Download className="mr-2 h-5 w-5" />
+                    <Download className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                     Download Report
                   </Button>
                 </div>
@@ -198,14 +198,14 @@ const Upload = () => {
                   {imagePreview && <GradCAMVisualization originalImage={imagePreview} />}
                 </>
               ) : (
-                <div className="bg-card p-12 rounded-2xl border border-border border-dashed flex flex-col items-center justify-center min-h-[400px]">
-                  <div className="p-4 rounded-2xl bg-muted mb-4">
-                    <Brain className="h-12 w-12 text-muted-foreground" />
+                <div className="bg-card p-6 sm:p-8 md:p-12 rounded-xl sm:rounded-2xl border border-border border-dashed flex flex-col items-center justify-center min-h-[300px] sm:min-h-[400px]">
+                  <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-muted mb-3 sm:mb-4">
+                    <Brain className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-muted-foreground" />
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2 text-center px-4">
                     Results Will Appear Here
                   </h3>
-                  <p className="text-muted-foreground text-center max-w-sm">
+                  <p className="text-xs sm:text-sm text-muted-foreground text-center max-w-sm px-4">
                     Upload an MRI image and click "Start AI Analysis" to see detailed tumor detection results
                   </p>
                 </div>
@@ -214,8 +214,8 @@ const Upload = () => {
           </div>
 
           {/* Disclaimer */}
-          <div className="mt-12 p-4 bg-warning/5 border border-warning/20 rounded-xl">
-            <p className="text-sm text-muted-foreground text-center">
+          <div className="mt-8 sm:mt-12 p-3 sm:p-4 bg-warning/5 border border-warning/20 rounded-lg sm:rounded-xl">
+            <p className="text-xs sm:text-sm text-muted-foreground text-center px-2">
               <strong className="text-warning">⚠️ Important:</strong> This AI analysis is for research and educational purposes only. 
               Always consult with qualified medical professionals for actual diagnosis and treatment decisions.
             </p>

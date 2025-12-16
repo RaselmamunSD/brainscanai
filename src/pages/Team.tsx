@@ -24,17 +24,17 @@ const Team = () => {
               <ArrowLeft className="h-4 w-4" />
               Back to Home
             </Link>
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
               Our Research Team
             </h1>
-            <p className="text-muted-foreground max-w-2xl">
+            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
               Meet the dedicated researchers and developers behind the NeuroScanAI brain cancer detection platform
             </p>
           </div>
 
           {/* About Project */}
-          <div className="bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 rounded-2xl border border-border p-8 mb-12">
-            <div className="grid md:grid-cols-2 gap-8">
+          <div className="bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 rounded-2xl border border-border p-4 sm:p-6 md:p-8 mb-12">
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
               <div>
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 rounded-lg medical-gradient">
@@ -86,7 +86,7 @@ const Team = () => {
               <h2 className="text-2xl font-display font-bold text-foreground">Our Team</h2>
             </div>
             
-            {/* Row 1: Supervisor (centered) */}
+            {/* Supervisor - Centered on all screens */}
             {supervisor && (
               <div className="flex justify-center">
                 <div className="w-full max-w-sm">
@@ -95,19 +95,10 @@ const Team = () => {
               </div>
             )}
             
-            {/* Row 2: First 2 members */}
-            <div className="flex justify-center gap-6">
-              {members.slice(0, 2).map((member) => (
+            {/* Team Members - Responsive Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+              {members.map((member) => (
                 <div key={member.id} className="w-full max-w-sm">
-                  <TeamMemberCard member={member} />
-                </div>
-              ))}
-            </div>
-            
-            {/* Row 3: Last 3 members */}
-            <div className="flex justify-center gap-6 flex-wrap">
-              {members.slice(2, 5).map((member) => (
-                <div key={member.id} className="w-full max-w-xs">
                   <TeamMemberCard member={member} />
                 </div>
               ))}
@@ -115,14 +106,14 @@ const Team = () => {
           </div>
 
           {/* Contact Section */}
-          <div className="mt-16 text-center">
-            <h3 className="text-xl font-semibold text-foreground mb-4">Get in Touch</h3>
-            <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
+          <div className="mt-12 sm:mt-16 text-center">
+            <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Get in Touch</h3>
+            <p className="text-sm sm:text-base text-muted-foreground mb-6 max-w-xl mx-auto px-4">
               Interested in our research or have questions about the project? 
               Feel free to reach out to any of our team members via email.
             </p>
             <Link to="/upload">
-              <button className="px-8 py-3 medical-gradient text-primary-foreground rounded-xl font-medium hover:opacity-90 transition-opacity">
+              <button className="px-6 sm:px-8 py-2.5 sm:py-3 medical-gradient text-primary-foreground rounded-xl text-sm sm:text-base font-medium hover:opacity-90 transition-opacity">
                 Try NeuroScanAI Now
               </button>
             </Link>

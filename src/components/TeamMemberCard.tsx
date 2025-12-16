@@ -24,8 +24,11 @@ const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
         </div>
       )}
       
-      <div className={cn("p-10 py-12", isSupervisor && "pt-8")}>
-        <div className="flex flex-col items-center text-center gap-6">
+      <div className={cn(
+        "p-6 py-8 sm:p-8 sm:py-10 md:p-10 md:py-12", 
+        isSupervisor && "pt-6 sm:pt-8"
+      )}>
+        <div className="flex flex-col items-center text-center gap-4 sm:gap-6">
           {/* Avatar - Circular & Larger with vibrant ring */}
           <div className="relative shrink-0">
             <div className={cn(
@@ -38,50 +41,52 @@ const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
                 className={cn(
                   "rounded-full object-cover border-4 border-card",
                   isSupervisor 
-                    ? "w-40 h-40" 
-                    : "w-36 h-36"
+                    ? "w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40" 
+                    : "w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36"
                 )}
               />
             </div>
             {isSupervisor && (
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 p-2 bg-primary rounded-full shadow-lg">
-                <GraduationCap className="h-5 w-5 text-primary-foreground" />
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 p-1.5 sm:p-2 bg-primary rounded-full shadow-lg">
+                <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5 text-primary-foreground" />
               </div>
             )}
           </div>
 
           {/* Info */}
-          <div className="space-y-2">
+          <div className="space-y-2 w-full">
             <h3 className={cn(
               "font-semibold text-foreground",
-              isSupervisor ? "text-xl" : "text-lg"
+              isSupervisor 
+                ? "text-lg sm:text-xl" 
+                : "text-base sm:text-lg"
             )}>
               {member.name}
             </h3>
             
             {member.designation && (
-              <p className="text-primary font-medium text-sm">
+              <p className="text-primary font-medium text-xs sm:text-sm">
                 {member.designation}
               </p>
             )}
 
             <div className="space-y-2 flex flex-col items-center">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <IdCard className="h-4 w-4 shrink-0" />
-                <span>{member.studentId}</span>
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                <IdCard className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                <span className="break-all text-center">{member.studentId}</span>
               </div>
               
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <GraduationCap className="h-4 w-4 shrink-0" />
-                <span className="text-center">{member.university}</span>
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                <GraduationCap className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                <span className="text-center break-words px-2">{member.university}</span>
               </div>
               
               <a 
                 href={`mailto:${member.email}`}
-                className="flex items-center gap-2 text-sm text-primary hover:underline"
+                className="flex items-center gap-2 text-xs sm:text-sm text-primary hover:underline break-all px-2"
               >
-                <Mail className="h-4 w-4 shrink-0" />
-                <span className="truncate">{member.email}</span>
+                <Mail className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                <span className="truncate max-w-[200px] sm:max-w-none">{member.email}</span>
               </a>
             </div>
           </div>

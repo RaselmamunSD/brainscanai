@@ -35,55 +35,55 @@ const Analytics = () => {
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
           {/* Header */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <Link 
               to="/" 
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-4"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-3 sm:mb-4 text-sm sm:text-base"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
               Back to Home
             </Link>
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground mb-2">
               Model Performance Analytics
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-sm sm:text-base text-muted-foreground">
               Comprehensive metrics and visualizations of our brain tumor classification model
             </p>
           </div>
 
           {/* Key Metrics */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
             {metricCards.map((metric) => (
               <Card key={metric.label} className="hover-lift">
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 rounded-lg medical-gradient">
-                      <metric.icon className="h-5 w-5 text-primary-foreground" />
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                    <div className="p-1.5 sm:p-2 rounded-lg medical-gradient">
+                      <metric.icon className="h-4 w-4 sm:h-5 sm:w-5 text-primary-foreground" />
                     </div>
-                    <span className="text-sm font-medium text-muted-foreground">{metric.label}</span>
+                    <span className="text-xs sm:text-sm font-medium text-muted-foreground">{metric.label}</span>
                   </div>
                   <div className="flex items-end gap-1">
-                    <span className={`text-3xl font-bold ${metric.color}`}>
+                    <span className={`text-2xl sm:text-3xl font-bold ${metric.color}`}>
                       {metric.value.toFixed(1)}
                     </span>
-                    <span className="text-lg text-muted-foreground mb-1">%</span>
+                    <span className="text-base sm:text-lg text-muted-foreground mb-1">%</span>
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 mb-8">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
             {/* ROC Curve */}
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-primary" />
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                   ROC Curve
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="h-80">
+              <CardContent className="p-4 sm:p-6">
+                <div className="h-64 sm:h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={rocCurveData}>
                       <defs>
@@ -127,8 +127,8 @@ const Analytics = () => {
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
-                <div className="mt-4 p-3 bg-muted rounded-lg">
-                  <p className="text-sm text-muted-foreground">
+                <div className="mt-3 sm:mt-4 p-2 sm:p-3 bg-muted rounded-lg">
+                  <p className="text-xs sm:text-sm text-muted-foreground">
                     <strong className="text-foreground">AUC Score: {performanceMetrics.auc}%</strong> - 
                     Indicates excellent model discrimination capability
                   </p>
@@ -138,14 +138,14 @@ const Analytics = () => {
 
             {/* Training History */}
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Activity className="h-5 w-5 text-secondary" />
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <Activity className="h-4 w-4 sm:h-5 sm:w-5 text-secondary" />
                   Training History
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="h-80">
+              <CardContent className="p-4 sm:p-6">
+                <div className="h-64 sm:h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={trainingHistory}>
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -204,25 +204,25 @@ const Analytics = () => {
             </Card>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 mb-8">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
             {/* Confusion Matrix */}
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <PieChart className="h-5 w-5 text-accent" />
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <PieChart className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                   Confusion Matrix
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <div className="min-w-[400px]">
+              <CardContent className="p-4 sm:p-6">
+                <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+                  <div className="min-w-[300px] sm:min-w-[400px]">
                     <div className="grid grid-cols-5 gap-1">
                       {/* Header row */}
-                      <div className="p-2"></div>
+                      <div className="p-1 sm:p-2"></div>
                       {confusionLabels.map((label) => (
                         <div 
                           key={`header-${label}`} 
-                          className="p-2 text-xs font-medium text-muted-foreground text-center truncate"
+                          className="p-1 sm:p-2 text-[10px] sm:text-xs font-medium text-muted-foreground text-center truncate"
                         >
                           {label}
                         </div>
@@ -233,7 +233,7 @@ const Analytics = () => {
                         <>
                           <div 
                             key={`label-${i}`}
-                            className="p-2 text-xs font-medium text-muted-foreground flex items-center"
+                            className="p-1 sm:p-2 text-[10px] sm:text-xs font-medium text-muted-foreground flex items-center"
                           >
                             {confusionLabels[i]}
                           </div>
@@ -243,7 +243,7 @@ const Analytics = () => {
                             return (
                               <div
                                 key={`cell-${i}-${j}`}
-                                className="aspect-square flex items-center justify-center text-sm font-bold rounded-lg transition-all hover:scale-105"
+                                className="aspect-square flex items-center justify-center text-xs sm:text-sm font-bold rounded-md sm:rounded-lg transition-all hover:scale-105"
                                 style={{
                                   backgroundColor: isDiagonal 
                                     ? `hsl(var(--success) / ${0.2 + intensity * 0.6})`
@@ -258,8 +258,8 @@ const Analytics = () => {
                         </>
                       ))}
                     </div>
-                    <div className="mt-4 text-center">
-                      <p className="text-xs text-muted-foreground">
+                    <div className="mt-3 sm:mt-4 text-center">
+                      <p className="text-[10px] sm:text-xs text-muted-foreground">
                         Rows: Actual Labels | Columns: Predicted Labels
                       </p>
                     </div>
@@ -270,14 +270,14 @@ const Analytics = () => {
 
             {/* Per-Class Metrics */}
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="h-5 w-5 text-primary" />
+              <CardHeader className="p-4 sm:p-6">
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <BarChart3 className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                   Per-Class Performance
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="h-80">
+              <CardContent className="p-4 sm:p-6">
+                <div className="h-64 sm:h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={classMetrics} layout="vertical">
                       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -302,26 +302,26 @@ const Analytics = () => {
 
           {/* Model Architecture Info */}
           <Card>
-            <CardHeader>
-              <CardTitle>Model Architecture</CardTitle>
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-base sm:text-lg">Model Architecture</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="p-4 bg-muted rounded-xl">
-                  <h4 className="font-semibold text-foreground mb-2">Base Model</h4>
-                  <p className="text-sm text-muted-foreground">
+            <CardContent className="p-4 sm:p-6">
+              <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+                <div className="p-3 sm:p-4 bg-muted rounded-lg sm:rounded-xl">
+                  <h4 className="text-sm sm:text-base font-semibold text-foreground mb-2">Base Model</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
                     ResNet-50 with custom classification head, pretrained on ImageNet and fine-tuned on brain MRI dataset
                   </p>
                 </div>
-                <div className="p-4 bg-muted rounded-xl">
-                  <h4 className="font-semibold text-foreground mb-2">Input Processing</h4>
-                  <p className="text-sm text-muted-foreground">
+                <div className="p-3 sm:p-4 bg-muted rounded-lg sm:rounded-xl">
+                  <h4 className="text-sm sm:text-base font-semibold text-foreground mb-2">Input Processing</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
                     224x224 pixel input with normalization and augmentation including rotation, flipping, and intensity scaling
                   </p>
                 </div>
-                <div className="p-4 bg-muted rounded-xl">
-                  <h4 className="font-semibold text-foreground mb-2">Training Details</h4>
-                  <p className="text-sm text-muted-foreground">
+                <div className="p-3 sm:p-4 bg-muted rounded-lg sm:rounded-xl sm:col-span-2 md:col-span-1">
+                  <h4 className="text-sm sm:text-base font-semibold text-foreground mb-2">Training Details</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
                     30 epochs with Adam optimizer, learning rate 0.0001, batch size 32, early stopping patience of 5
                   </p>
                 </div>

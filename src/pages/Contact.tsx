@@ -95,16 +95,16 @@ const Contact = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4">
+      <section className="pt-24 sm:pt-32 pb-12 sm:pb-16 px-4">
         <div className="container mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6">
-            <MessageSquare className="h-4 w-4" />
-            <span className="text-sm font-medium">Get In Touch</span>
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 text-primary mb-4 sm:mb-6">
+            <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4" />
+            <span className="text-xs sm:text-sm font-medium">Get In Touch</span>
           </div>
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-4 sm:mb-6 px-4">
             Contact <span className="text-primary">Us</span>
           </h1>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto px-4">
             Have questions about our brain tumor detection system? Want to collaborate on research? 
             We'd love to hear from you.
           </p>
@@ -112,20 +112,20 @@ const Contact = () => {
       </section>
 
       {/* Contact Info Cards */}
-      <section className="py-8 px-4">
+      <section className="py-6 sm:py-8 px-4">
         <div className="container mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {contactInfo.map((info, index) => (
               <div 
                 key={index}
-                className="p-6 rounded-2xl bg-card border border-border text-center hover:border-primary/50 transition-all duration-300"
+                className="p-5 sm:p-6 rounded-xl sm:rounded-2xl bg-card border border-border text-center hover:border-primary/50 transition-all duration-300"
               >
-                <div className="w-12 h-12 rounded-xl medical-gradient flex items-center justify-center mx-auto mb-4">
-                  <info.icon className="h-6 w-6 text-primary-foreground" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl medical-gradient flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                  <info.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary-foreground" />
                 </div>
-                <h3 className="font-semibold text-foreground mb-1">{info.title}</h3>
-                <p className="text-primary font-medium mb-1">{info.details}</p>
-                <p className="text-muted-foreground text-sm">{info.description}</p>
+                <h3 className="text-sm sm:text-base font-semibold text-foreground mb-1">{info.title}</h3>
+                <p className="text-xs sm:text-sm text-primary font-medium mb-1">{info.details}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">{info.description}</p>
               </div>
             ))}
           </div>
@@ -133,23 +133,23 @@ const Contact = () => {
       </section>
 
       {/* Contact Form & Map Section */}
-      <section className="py-16 px-4">
+      <section className="py-12 sm:py-16 px-4">
         <div className="container mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12">
             {/* Contact Form */}
-            <div className="p-8 rounded-3xl bg-card border border-border">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-lg medical-gradient flex items-center justify-center">
-                  <Send className="h-5 w-5 text-primary-foreground" />
+            <div className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-card border border-border">
+              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg medical-gradient flex items-center justify-center">
+                  <Send className="h-4 w-4 sm:h-5 sm:w-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <h2 className="font-display text-2xl font-bold text-foreground">Send a Message</h2>
-                  <p className="text-muted-foreground text-sm">Fill out the form and we'll respond soon</p>
+                  <h2 className="font-display text-xl sm:text-2xl font-bold text-foreground">Send a Message</h2>
+                  <p className="text-muted-foreground text-xs sm:text-sm">Fill out the form and we'll respond soon</p>
                 </div>
               </div>
               
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid md:grid-cols-2 gap-5">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+                <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Your Name</label>
                     <Input
@@ -199,64 +199,64 @@ const Contact = () => {
                 </div>
                 <Button 
                   type="submit" 
-                  className="w-full medical-gradient"
+                  className="w-full medical-gradient h-11 sm:h-12 text-sm sm:text-base"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
-                  <Send className="ml-2 h-4 w-4" />
+                  <Send className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
                 </Button>
               </form>
             </div>
 
             {/* Info Section */}
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               {/* About Section */}
-              <div className="p-8 rounded-3xl bg-muted/50 border border-border">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Building className="h-5 w-5 text-primary" />
+              <div className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-muted/50 border border-border">
+                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Building className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                   </div>
-                  <h3 className="font-display text-xl font-bold text-foreground">About Our Research</h3>
+                  <h3 className="font-display text-lg sm:text-xl font-bold text-foreground">About Our Research</h3>
                 </div>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
                   NeuroScanAI is a research project developed by a dedicated team of students and 
                   faculty members. Our goal is to leverage artificial intelligence to assist in 
                   early detection of brain tumors, potentially improving patient outcomes through 
                   faster diagnosis.
                 </p>
-                <p className="text-muted-foreground">
+                <p className="text-xs sm:text-sm text-muted-foreground">
                   This project is part of our ongoing research in medical image analysis and 
                   deep learning applications in healthcare.
                 </p>
               </div>
 
               {/* Collaboration */}
-              <div className="p-8 rounded-3xl bg-primary/5 border border-primary/20">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Users className="h-5 w-5 text-primary" />
+              <div className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-primary/5 border border-primary/20">
+                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Users className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                   </div>
-                  <h3 className="font-display text-xl font-bold text-foreground">Research Collaboration</h3>
+                  <h3 className="font-display text-lg sm:text-xl font-bold text-foreground">Research Collaboration</h3>
                 </div>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
                   We welcome collaboration opportunities with researchers, medical institutions, 
                   and organizations interested in advancing AI-assisted medical diagnosis.
                 </p>
-                <ul className="space-y-2 text-muted-foreground">
+                <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
                     Joint research projects
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
                     Dataset contributions
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
                     Technical consultations
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
                     Academic partnerships
                   </li>
                 </ul>
@@ -267,24 +267,24 @@ const Contact = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 px-4 bg-muted/30">
+      <section className="py-12 sm:py-16 px-4 bg-muted/30">
         <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto px-4">
               Find answers to common questions about our system
             </p>
           </div>
-          <div className="max-w-3xl mx-auto space-y-4">
+          <div className="max-w-3xl mx-auto space-y-3 sm:space-y-4">
             {faqs.map((faq, index) => (
               <div 
                 key={index}
-                className="p-6 rounded-2xl bg-card border border-border"
+                className="p-5 sm:p-6 rounded-xl sm:rounded-2xl bg-card border border-border"
               >
-                <h3 className="font-semibold text-foreground mb-2">{faq.question}</h3>
-                <p className="text-muted-foreground text-sm">{faq.answer}</p>
+                <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2">{faq.question}</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground">{faq.answer}</p>
               </div>
             ))}
           </div>
