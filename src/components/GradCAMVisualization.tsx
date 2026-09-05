@@ -1,20 +1,30 @@
 import { useState } from "react";
-import { Eye, EyeOff, Layers } from "lucide-react";
+import { Eye, EyeOff, Layers, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { cn } from "@/lib/utils";
 
 interface GradCAMVisualizationProps {
   originalImage: string;
+  gradcamOverlayUrl?: string;
+  gradcamHeatmapUrl?: string;
+  explanationNote?: string;
 }
 
-const GradCAMVisualization = ({ originalImage }: GradCAMVisualizationProps) => {
+const GradCAMVisualization = ({
+  originalImage,
+  gradcamOverlayUrl,
+  gradcamHeatmapUrl,
+  explanationNote,
+}: GradCAMVisualizationProps) => {
   const [showHeatmap, setShowHeatmap] = useState(true);
-  const [heatmapOpacity, setHeatmapOpacity] = useState([50]);
+  const [heatmapOpacity, setHeatmapOpacity] = useState([70]);
   const [viewMode, setViewMode] = useState<"overlay" | "sideBySide">("overlay");
 
-  // Simulated heatmap - in real implementation, this would come from the AI model
-  const generateHeatmapStyle = () => ({
+  const effectiveOverlayUrl = gradcamOverlayUrl || originalImage;
+  const effectiveHeatmapUrl = gradcamHeatmapUrl || originalImage;
+
+  // Fallback gradient if backend Grad-CAM image is not yet rendered
+  const generateHeatmapFallbackStyle = () => ({
     background: `
       radial-gradient(ellipse 40% 35% at 55% 45%, 
         rgba(255, 0, 0, ${heatmapOpacity[0] / 100}) 0%, 
@@ -32,7 +42,14 @@ const GradCAMVisualization = ({ originalImage }: GradCAMVisualizationProps) => {
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Layers className="h-5 w-5 text-primary" />
-            <h4 className="font-semibold text-foreground">Explainable AI Visualization</h4>
+            <h4 className="font-semibold text-foreground flex items-center gap-1.5">
+              Explainable AI (Grad-CAM)
+              {gradcamOverlayUrl && (
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/20 text-primary font-medium flex items-center gap-1">
+                  <Sparkles className="h-3 w-3" /> PyTorch Live
+                </span>
+              )}
+            </h4>
           </div>
           
           <div className="flex items-center gap-2">
@@ -64,9 +81,9 @@ const GradCAMVisualization = ({ originalImage }: GradCAMVisualizationProps) => {
               className="shrink-0"
             >
               {showHeatmap ? (
-                <><EyeOff className="h-4 w-4 mr-2" /> Hide Heatmap</>
+                <><EyeOff className="h-4 w-4 mr-2" /> Hide Attention</>
               ) : (
-                <><Eye className="h-4 w-4 mr-2" /> Show Heatmap</>
+                <><Eye className="h-4 w-4 mr-2" /> Show Attention</>
               )}
             </Button>
             
@@ -92,24 +109,28 @@ const GradCAMVisualization = ({ originalImage }: GradCAMVisualizationProps) => {
       {/* Visualization */}
       <div className="p-4">
         {viewMode === "overlay" ? (
-          <div className="relative aspect-square max-w-md mx-auto rounded-xl overflow-hidden">
+          <div className="relative aspect-square max-w-md mx-auto rounded-xl overflow-hidden border border-border">
+            {/* Base Image */}
             <img 
               src={originalImage} 
               alt="Original MRI" 
               className="w-full h-full object-cover"
             />
+            {/* Heatmap Layer */}
             {showHeatmap && (
-              <div 
-                className="absolute inset-0 transition-opacity duration-300"
-                style={generateHeatmapStyle()}
-              />
-            )}
-            
-            {/* Scan line animation */}
-            {showHeatmap && (
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute inset-x-0 h-1 bg-gradient-to-b from-transparent via-primary/50 to-transparent animate-scan-line" />
-              </div>
+              gradcamOverlayUrl ? (
+                <img 
+                  src={gradcamOverlayUrl} 
+                  alt="Grad-CAM Overlay" 
+                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+                  style={{ opacity: heatmapOpacity[0] / 100 }}
+                />
+              ) : (
+                <div 
+                  className="absolute inset-0 transition-opacity duration-300"
+                  style={generateHeatmapFallbackStyle()}
+                />
+              )
             )}
           </div>
         ) : (
@@ -125,16 +146,12 @@ const GradCAMVisualization = ({ originalImage }: GradCAMVisualizationProps) => {
               </div>
             </div>
             <div className="space-y-2">
-              <p className="text-sm font-medium text-muted-foreground text-center">AI Heatmap</p>
+              <p className="text-sm font-medium text-muted-foreground text-center">AI Attention Heatmap</p>
               <div className="aspect-square rounded-xl overflow-hidden border border-border relative">
                 <img 
-                  src={originalImage} 
+                  src={gradcamHeatmapUrl || gradcamOverlayUrl || originalImage} 
                   alt="MRI with Heatmap" 
                   className="w-full h-full object-cover"
-                />
-                <div 
-                  className="absolute inset-0"
-                  style={generateHeatmapStyle()}
                 />
               </div>
             </div>
@@ -145,13 +162,19 @@ const GradCAMVisualization = ({ originalImage }: GradCAMVisualizationProps) => {
         <div className="mt-4 flex items-center justify-center gap-6">
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded bg-gradient-to-r from-red-500 to-orange-500" />
-            <span className="text-sm text-muted-foreground">High Activation</span>
+            <span className="text-sm text-muted-foreground">High Attention (Tumor Focus)</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded bg-gradient-to-r from-yellow-500 to-green-500" />
-            <span className="text-sm text-muted-foreground">Low Activation</span>
+            <div className="w-4 h-4 rounded bg-gradient-to-r from-yellow-500 to-blue-500" />
+            <span className="text-sm text-muted-foreground">Low / Background</span>
           </div>
         </div>
+
+        {explanationNote && (
+          <p className="mt-3 text-xs text-muted-foreground text-center italic border-t border-border pt-2">
+            {explanationNote}
+          </p>
+        )}
       </div>
     </div>
   );

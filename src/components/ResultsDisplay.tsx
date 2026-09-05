@@ -1,4 +1,4 @@
-import { AlertTriangle, CheckCircle, TrendingUp, Clock, Brain } from "lucide-react";
+import { AlertTriangle, CheckCircle, TrendingUp, Clock, Brain, ShieldAlert } from "lucide-react";
 import { AnalysisResult, TumorType } from "@/hooks/useAnalysis";
 import { cn } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
@@ -46,21 +46,28 @@ const ResultsDisplay = ({ result, imagePreview }: ResultsDisplayProps) => {
           
           <div className="flex-1">
             <h3 className="text-sm font-medium text-muted-foreground mb-1">
-              Detection Result
+              Screening Classification
             </h3>
             <p className={cn("text-2xl font-bold", tumorColors[result.tumorType])}>
-              {result.tumorType}
+              {result.screeningLabel || result.tumorType}
             </p>
-            {result.grade && (
-              <span className={cn(
-                "inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium",
-                result.grade === "High Grade" 
-                  ? "bg-destructive/20 text-destructive" 
-                  : "bg-warning/20 text-warning"
-              )}>
-                {result.grade}
-              </span>
-            )}
+            <div className="flex flex-wrap gap-2 mt-2">
+              {result.grade && (
+                <span className={cn(
+                  "inline-block px-3 py-0.5 rounded-full text-xs font-medium",
+                  result.grade === "High Grade" 
+                    ? "bg-destructive/20 text-destructive" 
+                    : "bg-warning/20 text-warning"
+                )}>
+                  {result.grade}
+                </span>
+              )}
+              {result.modelVersion && (
+                <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-muted text-muted-foreground">
+                  Model v{result.modelVersion}
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -84,7 +91,7 @@ const ResultsDisplay = ({ result, imagePreview }: ResultsDisplayProps) => {
         <div className="bg-card p-4 rounded-xl border border-border">
           <div className="flex items-center gap-2 mb-2">
             <Clock className="h-4 w-4 text-secondary" />
-            <span className="text-sm text-muted-foreground">Processing Time</span>
+            <span className="text-sm text-muted-foreground">Inference Time</span>
           </div>
           <div className="flex items-end gap-2">
             <span className="text-3xl font-bold text-foreground">
@@ -127,13 +134,21 @@ const ResultsDisplay = ({ result, imagePreview }: ResultsDisplayProps) => {
                       "h-full rounded-full transition-all duration-500",
                       type === result.tumorType ? "medical-gradient" : "bg-muted-foreground/30"
                     )}
-                    style={{ width: `${prob}%` }}
+                    style={{ width: `${Math.min(prob, 100)}%` }}
                   />
                 </div>
               </div>
             ))}
         </div>
       </div>
+
+      {/* Regulatory & Clinical Disclaimer */}
+      {result.disclaimer && (
+        <div className="p-3.5 rounded-xl bg-muted/60 border border-border text-xs text-muted-foreground flex items-start gap-2.5">
+          <ShieldAlert className="h-4 w-4 text-warning shrink-0 mt-0.5" />
+          <p>{result.disclaimer}</p>
+        </div>
+      )}
     </div>
   );
 };

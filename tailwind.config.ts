@@ -86,11 +86,27 @@ export default {
         },
         "pulse-glow": {
           "0%, 100%": { boxShadow: "0 0 20px hsl(199 89% 48% / 0.3)" },
-          "50%": { boxShadow: "0 0 40px hsl(199 89% 48% / 0.6)" },
+          "50%": { boxShadow: "0 0 45px hsl(199 89% 48% / 0.7)" },
         },
         "scan-line": {
           "0%": { transform: "translateY(-100%)" },
           "100%": { transform: "translateY(100%)" },
+        },
+        "spin-slow": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        "spin-reverse-slow": {
+          "0%": { transform: "rotate(360deg)" },
+          "100%": { transform: "rotate(0deg)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-12px)" },
+        },
+        "radar-sweep": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
         },
       },
       animation: {
@@ -99,6 +115,10 @@ export default {
         "fade-in": "fade-in 0.5s ease-out forwards",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
         "scan-line": "scan-line 2s ease-in-out infinite",
+        "spin-slow": "spin-slow 28s linear infinite",
+        "spin-reverse-slow": "spin-reverse-slow 35s linear infinite",
+        float: "float 5s ease-in-out infinite",
+        "radar-sweep": "radar-sweep 4s linear infinite",
       },
     },
   },

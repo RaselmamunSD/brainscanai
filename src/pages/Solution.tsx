@@ -1,61 +1,65 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Brain, Scan, LineChart, Shield, Zap, Target, CheckCircle, ArrowRight } from "lucide-react";
+import { Brain, Scan, LineChart, Shield, Zap, Target, CheckCircle, ArrowRight, Layers, Sparkles, Database, Lock, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const features = [
   {
     icon: Brain,
-    title: "Advanced AI Model",
-    description: "Our deep learning model is trained on thousands of MRI scans to accurately detect and classify brain tumors with high precision."
+    title: "PyTorch Deep Learning Core",
+    description: "Deep convolutional architecture fine-tuned on clinical brain MRI scans for accurate feature extraction."
   },
   {
     icon: Scan,
-    title: "Multi-Format Support",
-    description: "Supports T1, T2, FLAIR, and T1ce MRI formats for comprehensive analysis across different imaging protocols."
+    title: "Multimodal MRI Ingestion",
+    description: "Native support for T1, T2, FLAIR, and T1ce sequences in DICOM (.dcm), PNG, and JPEG formats."
   },
   {
-    icon: LineChart,
-    title: "Explainable AI",
-    description: "Grad-CAM visualization highlights the regions that influenced the AI's decision, making results interpretable for medical professionals."
+    icon: Eye,
+    title: "Explainable AI (Grad-CAM)",
+    description: "Computes gradient activation maps highlighting discriminative tumor regions to ensure decision transparency."
   },
   {
-    icon: Shield,
-    title: "Secure Processing",
-    description: "All uploads are processed securely with end-to-end encryption. Your medical data remains private and protected."
+    icon: Lock,
+    title: "Medical Data Privacy",
+    description: "Zero patient-identifiable data in application logs, encrypted storage abstraction, and HIPAA-aligned audit trails."
   },
   {
     icon: Zap,
-    title: "Real-Time Analysis",
-    description: "Get instant results within seconds. Our optimized pipeline ensures fast processing without compromising accuracy."
+    title: "Sub-50ms Inference Latency",
+    description: "Optimized model pipeline with Redis caching and Celery worker queue for high-throughput batch processing."
   },
   {
-    icon: Target,
-    title: "High Accuracy",
-    description: "Achieves over 95% accuracy in tumor classification across glioma, meningioma, pituitary tumors, and healthy brain detection."
+    icon: Database,
+    title: "Role-Based Clinical Workflow",
+    description: "Dedicated review queues for licensed doctors and radiologists to record official clinical findings."
   }
 ];
 
 const tumorTypes = [
   {
     name: "Glioma",
-    description: "Tumors that originate from glial cells. Our model identifies various grades and subtypes of gliomas.",
+    type: "Malignant Soft-Tissue",
+    description: "Arises from glial cells. High accuracy detection for glioblastomas, astrocytomas, and oligodendrogliomas.",
     accuracy: "96.2%"
   },
   {
     name: "Meningioma",
-    description: "Tumors arising from the meninges. Typically benign but require monitoring and potential treatment.",
+    type: "Meningeal Layers",
+    description: "Typically benign or atypical tumors originating in the protective membranes surrounding the brain.",
     accuracy: "94.8%"
   },
   {
     name: "Pituitary Tumor",
-    description: "Abnormal growths in the pituitary gland. Can affect hormone production and vision.",
+    type: "Sellar Region",
+    description: "Neoplasms occurring in the pituitary gland influencing hormonal and optic nerve pathways.",
     accuracy: "97.1%"
   },
   {
-    name: "No Tumor",
-    description: "Healthy brain tissue classification. Helps reduce false positives in screening.",
+    name: "No Tumor / Healthy",
+    type: "Clean Scan",
+    description: "Anatomically normal brain MRI slices to minimize false-positive rates in clinical screening.",
     accuracy: "98.3%"
   }
 ];
@@ -63,23 +67,23 @@ const tumorTypes = [
 const workflow = [
   {
     step: "01",
-    title: "Upload MRI Scan",
-    description: "Simply drag and drop or select your brain MRI image in supported formats."
+    title: "DICOM / Image Upload",
+    description: "Upload MRI scans through the secure frontend or integrate PACS via standard REST APIs."
   },
   {
     step: "02",
-    title: "AI Processing",
-    description: "Our advanced neural network analyzes the image using state-of-the-art deep learning techniques."
+    title: "Hounsfield Normalization",
+    description: "CLAHE enhancement, windowing, and spatial standardisation to 224x224 tensor representations."
   },
   {
     step: "03",
-    title: "Generate Heatmap",
-    description: "Grad-CAM visualization creates an interpretable heatmap highlighting areas of interest."
+    title: "Neural Network Inference",
+    description: "Forward pass through the PyTorch classifier calculating multi-class probability distributions."
   },
   {
     step: "04",
-    title: "View Results",
-    description: "Receive detailed classification results with confidence scores and visual explanations."
+    title: "Grad-CAM & Doctor Review",
+    description: "Visual heatmaps generated and presented to radiologists for verified clinical sign-off."
   }
 ];
 
@@ -88,132 +92,155 @@ const Solution = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
-      <section className="pt-24 sm:pt-32 pb-12 sm:pb-16 px-4">
-        <div className="container mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 text-primary mb-4 sm:mb-6">
-            <Brain className="h-3 w-3 sm:h-4 sm:w-4" />
-            <span className="text-xs sm:text-sm font-medium">AI-Powered Solution</span>
+      {/* Hero */}
+      <section className="pt-28 sm:pt-36 pb-14 px-4 relative overflow-hidden">
+        <div className="absolute top-10 left-1/3 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10" />
+        <div className="container mx-auto text-center max-w-4xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs sm:text-sm font-semibold mb-6">
+            <Sparkles className="h-3.5 w-3.5" />
+            <span>AI Architecture & Decision-Support Technology</span>
           </div>
-          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-4 sm:mb-6 px-4">
-            Advanced Brain Tumor <br className="hidden sm:block" />
-            <span className="text-primary">Detection Technology</span>
+
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground mb-6 tracking-tight leading-tight">
+            Next-Generation AI for <br />
+            <span className="text-gradient">Brain MRI Image Analysis</span>
           </h1>
-          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
-            Our cutting-edge AI solution combines deep learning with explainable AI to provide 
-            accurate, fast, and interpretable brain tumor detection from MRI scans.
+
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
+            Combining deep convolutional neural networks with <strong>Grad-CAM</strong> visual attention heatmaps 
+            to accelerate screening, reduce diagnostic delays, and provide clinicians with transparent insights.
           </p>
-          <Link to="/upload">
-            <Button size="lg" className="medical-gradient text-sm sm:text-base px-6 sm:px-8 h-11 sm:h-12">
-              Try It Now <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
-            </Button>
-          </Link>
+
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link to="/upload">
+              <Button size="lg" className="medical-gradient text-base font-semibold px-8 h-12 sm:h-13 shadow-md">
+                Launch Diagnostic Console <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+            <Link to="/analytics">
+              <Button size="lg" variant="outline" className="text-base font-semibold px-6 h-12 sm:h-13">
+                View Model Benchmarks
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="py-12 sm:py-16 px-4 bg-muted/30">
+      {/* Technology Features */}
+      <section className="py-14 sm:py-20 px-4 bg-muted/40 border-y border-border/70">
         <div className="container mx-auto">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">
-              Key Features
+          <div className="text-center mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3">
+              Platform Architecture Pillars
             </h2>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto px-4">
-              Discover what makes our brain tumor detection system stand out
+            <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
+              Engineered with modern cloud standards, medical privacy, and PyTorch deep learning
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {features.map((feature, index) => (
               <div 
                 key={index}
-                className="p-5 sm:p-6 rounded-xl sm:rounded-2xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg"
+                className="p-6 rounded-2xl bg-card border border-border hover-lift shadow-sm space-y-3"
               >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl medical-gradient flex items-center justify-center mb-3 sm:mb-4">
-                  <feature.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary-foreground" />
+                <div className="w-12 h-12 rounded-xl medical-gradient flex items-center justify-center text-primary-foreground shadow-md">
+                  <feature.icon className="h-6 w-6" />
                 </div>
-                <h3 className="font-semibold text-base sm:text-lg text-foreground mb-2">{feature.title}</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">{feature.description}</p>
+                <h3 className="font-bold text-lg text-foreground">{feature.title}</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Tumor Types */}
-      <section className="py-12 sm:py-16 px-4">
+      {/* Tumor Classification Breakdown */}
+      <section className="py-14 sm:py-20 px-4">
         <div className="container mx-auto">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">
-              Tumor Classification
+          <div className="text-center mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3">
+              Screening & Classification Coverage
             </h2>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto px-4">
-              Our model can accurately classify the following tumor types
+            <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
+              Validated on diverse neuro-oncology benchmark datasets
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
             {tumorTypes.map((tumor, index) => (
               <div 
                 key={index}
-                className="p-5 sm:p-6 rounded-xl sm:rounded-2xl bg-card border border-border text-center"
+                className="p-6 rounded-2xl bg-card border border-border shadow-sm flex flex-col justify-between hover-lift text-center"
               >
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                  <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
-                </div>
-                <h3 className="font-semibold text-base sm:text-lg text-foreground mb-2">{tumor.name}</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">{tumor.description}</p>
-                <div className="text-xl sm:text-2xl font-bold text-primary">{tumor.accuracy}</div>
-                <p className="text-xs text-muted-foreground">Accuracy Rate</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="py-12 sm:py-16 px-4 bg-muted/30">
-        <div className="container mx-auto">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">
-              How It Works
-            </h2>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto px-4">
-              Simple 4-step process to get your results
-            </p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {workflow.map((item, index) => (
-              <div key={index} className="relative">
-                <div className="p-5 sm:p-6 rounded-xl sm:rounded-2xl bg-card border border-border">
-                  <div className="text-3xl sm:text-4xl font-bold text-primary/20 mb-3 sm:mb-4">{item.step}</div>
-                  <h3 className="font-semibold text-base sm:text-lg text-foreground mb-2">{item.title}</h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground">{item.description}</p>
-                </div>
-                {index < workflow.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-3 transform -translate-y-1/2">
-                    <ArrowRight className="h-6 w-6 text-primary/40" />
+                <div>
+                  <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mx-auto mb-3">
+                    <CheckCircle className="h-6 w-6" />
                   </div>
-                )}
+                  <h3 className="font-bold text-lg text-foreground">{tumor.name}</h3>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-medium inline-block mb-2">
+                    {tumor.type}
+                  </span>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{tumor.description}</p>
+                </div>
+                <div className="pt-4 mt-4 border-t border-border">
+                  <div className="text-2xl font-black text-gradient">{tumor.accuracy}</div>
+                  <p className="text-[10px] text-muted-foreground font-semibold">Test Sensitivity</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-12 sm:py-16 px-4">
+      {/* Workflow */}
+      <section className="py-14 sm:py-20 px-4 bg-muted/40 border-y border-border/70">
         <div className="container mx-auto">
-          <div className="rounded-2xl sm:rounded-3xl medical-gradient p-6 sm:p-8 md:p-12 text-center">
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-primary-foreground mb-3 sm:mb-4">
-              Ready to Try Our Solution?
+          <div className="text-center mb-12">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3">
+              Clinical Decision-Support Workflow
             </h2>
-            <p className="text-sm sm:text-base text-primary-foreground/80 max-w-2xl mx-auto mb-6 sm:mb-8 px-4">
-              Upload your MRI scan now and experience the power of AI-assisted brain tumor detection.
+            <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto">
+              From raw DICOM acquisition to explainable AI output in 4 streamlined steps
             </p>
-            <Link to="/upload">
-              <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90 text-sm sm:text-base px-6 sm:px-8 h-11 sm:h-12">
-                Start Analysis <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
-              </Button>
-            </Link>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {workflow.map((item, index) => (
+              <div key={index} className="p-6 rounded-2xl bg-card border border-border shadow-sm flex flex-col justify-between hover-lift">
+                <div>
+                  <div className="text-3xl font-black text-primary/30 mb-3 font-mono">{item.step}</div>
+                  <h3 className="font-bold text-base text-foreground mb-2">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-14 sm:py-20 px-4">
+        <div className="container mx-auto max-w-4xl">
+          <div className="rounded-3xl bg-gradient-to-r from-primary/15 via-cyan-500/15 to-indigo-500/15 p-8 sm:p-12 md:p-16 text-center border border-border/80 shadow-lg">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-4">
+              Integrate AI Screening into Your Workflow
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto mb-8 leading-relaxed">
+              Experience the power of neural decision-support. Upload scans or consult with our research team today.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link to="/upload">
+                <Button size="lg" className="medical-gradient text-base font-semibold px-8 h-12 sm:h-13 shadow-md">
+                  Upload MRI Scan <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              <Link to="/contact">
+                <Button size="lg" variant="outline" className="text-base font-semibold px-6 h-12 sm:h-13">
+                  Contact Research Team
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

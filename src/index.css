@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
+    --background: 0 0% 100%;
     --foreground: 222 47% 11%;
     
     --card: 0 0% 100%;
@@ -20,7 +20,7 @@
     --secondary-foreground: 0 0% 100%;
     
     --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted-foreground: 215 16% 45%;
     
     --accent: 262 83% 58%;
     --accent-foreground: 0 0% 100%;
@@ -32,7 +32,7 @@
     --input: 214 32% 91%;
     --ring: 199 89% 48%;
     
-    --radius: 0.75rem;
+    --radius: 0.85rem;
     
     --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
@@ -40,7 +40,7 @@
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 199 89% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -51,14 +51,14 @@
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
     
-    --card: 223 47% 15%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
     
-    --popover: 223 47% 15%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
     
     --primary: 199 89% 48%;
     --primary-foreground: 0 0% 100%;
@@ -66,8 +66,8 @@
     --secondary: 173 58% 39%;
     --secondary-foreground: 0 0% 100%;
     
-    --muted: 223 47% 20%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 45%;
     
     --accent: 262 83% 58%;
     --accent-foreground: 0 0% 100%;
@@ -75,8 +75,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 223 47% 20%;
-    --input: 223 47% 20%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
     --ring: 199 89% 48%;
     
     --success: 142 76% 36%;
@@ -84,15 +84,6 @@
     
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
-
-    --sidebar-background: 223 47% 13%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 199 89% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 223 47% 18%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 223 47% 20%;
-    --sidebar-ring: 199 89% 48%;
   }
 }
 
@@ -101,28 +92,48 @@
     @apply border-border;
   }
   
+  html {
+    color-scheme: light;
+  }
+  
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
+    background-color: #ffffff;
+    background-image: 
+      radial-gradient(at 0% 0%, hsl(199 89% 48% / 0.03) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsl(173 58% 39% / 0.03) 0px, transparent 50%);
   }
 }
 
 @layer utilities {
   .medical-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+    background: linear-gradient(135deg, hsl(199 89% 48%) 0%, hsl(173 58% 39%) 100%);
   }
   
+  .medical-gradient-subtle {
+    background: linear-gradient(135deg, hsl(199 89% 48% / 0.08) 0%, hsl(173 58% 39% / 0.08) 100%);
+  }
+
   .text-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+    background: linear-gradient(135deg, hsl(199 89% 48%) 0%, hsl(173 58% 40%) 50%, hsl(262 83% 58%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
+
   .glass-effect {
-    @apply bg-card/80 backdrop-blur-lg border border-border/50;
+    @apply bg-white/90 backdrop-blur-xl border border-border/80 shadow-sm;
   }
   
+  .glass-panel {
+    @apply bg-white border border-border shadow-sm hover:shadow-md hover:border-primary/40 transition-all duration-300;
+  }
+
   .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-primary/40;
+  }
+
+  .cyber-glow {
+    box-shadow: 0 0 25px -5px hsl(199 89% 48% / 0.25);
   }
 }

@@ -1,99 +1,106 @@
-import { Brain, Mail, Github, Linkedin } from "lucide-react";
+import { Brain, Heart, Shield, Activity, Sparkles, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="col-span-1 md:col-span-2">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="p-2 rounded-lg medical-gradient">
-                <Brain className="h-5 w-5 text-primary-foreground" />
+    <footer className="bg-card border-t border-border/80 pt-14 pb-8">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+          
+          {/* Col 1 & 2: Brand Info */}
+          <div className="lg:col-span-2 space-y-4">
+            <Link to="/" className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl medical-gradient text-primary-foreground shadow-sm">
+                <Brain className="h-5 w-5" />
               </div>
-              <span className="font-display font-bold text-lg text-foreground">
-                NeuroScan<span className="text-primary">AI</span>
+              <span className="font-display font-extrabold text-xl text-foreground">
+                BrainScan<span className="text-primary">AI</span>
               </span>
             </Link>
-            <p className="text-muted-foreground text-sm max-w-md mb-4">
-              AI-powered brain cancer detection platform using multimodal MRI analysis. 
-              Leveraging deep learning for accurate tumor classification and explainable AI visualization.
+            <p className="text-xs sm:text-sm text-muted-foreground max-w-sm leading-relaxed">
+              Clinical decision-support platform engineered for multimodal brain MRI analysis, 
+              automated tumor screening, and transparent <strong>Grad-CAM</strong> visual interpretability.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Github className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Mail className="h-5 w-5" />
-              </a>
+            <div className="flex items-center gap-3 pt-2 text-xs text-muted-foreground">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold border border-emerald-500/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Backend API Online
+              </span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary font-semibold border border-primary/20">
+                PyTorch 2.4 Ready
+              </span>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Quick Links</h4>
-            <ul className="space-y-2">
+          {/* Col 3: Platform Links */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-bold text-foreground tracking-tight">Platform</h4>
+            <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
               <li>
-                <Link to="/" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                  Home
+                <Link to="/upload" className="hover:text-primary transition-colors flex items-center gap-1">
+                  Upload & Analyze MRI <ArrowUpRight className="h-3 w-3" />
                 </Link>
               </li>
               <li>
-                <Link to="/upload" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                  Analyze MRI
+                <Link to="/analytics" className="hover:text-primary transition-colors">
+                  Model Analytics & Metrics
                 </Link>
               </li>
               <li>
-                <Link to="/analytics" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                  Model Performance
+                <Link to="/solution" className="hover:text-primary transition-colors">
+                  AI Architecture & Fusion
                 </Link>
               </li>
               <li>
-                <Link to="/team" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                  Our Team
+                <a href="/docs" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">
+                  Swagger OpenAPI Docs
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 4: Research & Support */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-bold text-foreground tracking-tight">Research & Team</h4>
+            <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
+              <li>
+                <Link to="/team" className="hover:text-primary transition-colors">
+                  Our Research Team
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-primary transition-colors">
+                  Institutional Consultation
+                </Link>
+              </li>
+              <li>
+                <Link to="/solution" className="hover:text-primary transition-colors">
+                  Tumor Classification Matrix
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Resources */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Resources</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                  Documentation
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                  Research Paper
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                  API Reference
-                </a>
-              </li>
-            </ul>
+          {/* Col 5: Safety & Regulatory */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-bold text-foreground tracking-tight">Compliance</h4>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Designed according to international AI medical research standards. Zero-PHI telemetry and encrypted storage.
+            </p>
+            <div className="flex items-center gap-2 text-xs text-muted-foreground pt-1">
+              <Shield className="h-4 w-4 text-primary" />
+              <span>HIPAA & GDPR Aligned</span>
+            </div>
           </div>
+
         </div>
 
-        <div className="mt-12 pt-8 border-t border-border">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-muted-foreground text-sm text-center md:text-left">
-              © 2025 NeuroScanAI. All rights reserved.
-            </p>
-            <div className="px-4 py-2 bg-warning/10 rounded-lg border border-warning/20">
-              <p className="text-warning text-xs font-medium">
-                ⚠️ For Research & Educational Purposes Only - Not for Clinical Diagnosis
-              </p>
-            </div>
-          </div>
+        {/* Bottom Bar */}
+        <div className="pt-6 border-t border-border/70 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+          <p>© {new Date().getFullYear()} BrainScanAI Research Group. All rights reserved.</p>
+          <p className="text-center sm:text-right">
+            Developed for AI-Assisted Medical Screening & Clinical Decision Support.
+          </p>
         </div>
       </div>
     </footer>

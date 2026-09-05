@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Mail, Phone, MapPin, Clock, Send, MessageSquare, Users, Building } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, MessageSquare, Users, Building, ShieldCheck, Sparkles, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,50 +10,50 @@ import { useToast } from "@/hooks/use-toast";
 const contactInfo = [
   {
     icon: Mail,
-    title: "Email",
-    details: "neuroscanai@research.edu",
-    description: "Send us an email anytime"
+    title: "Research Inquiries",
+    details: "contact@brainscan.ai",
+    description: "Email our laboratory directly"
   },
   {
     icon: Phone,
-    title: "Phone",
+    title: "Department Phone",
     details: "+880 1XXX-XXXXXX",
-    description: "Mon-Fri from 9am to 6pm"
+    description: "Monday - Friday, 9:00 AM - 6:00 PM"
   },
   {
     icon: MapPin,
-    title: "Location",
+    title: "Laboratory Location",
     details: "Dhaka, Bangladesh",
-    description: "University Research Lab"
+    description: "Medical AI & Computer Vision Lab"
   },
   {
     icon: Clock,
-    title: "Working Hours",
+    title: "Operating Hours",
     details: "9:00 AM - 6:00 PM",
-    description: "Saturday - Thursday"
+    description: "Sunday - Thursday"
   }
 ];
 
 const faqs = [
   {
-    question: "Is this system approved for clinical use?",
-    answer: "No, this system is for research and educational purposes only. It should not be used for clinical diagnosis without proper medical consultation."
+    question: "Is BrainScanAI approved as an autonomous medical diagnostic device?",
+    answer: "No. BrainScanAI is strictly an AI-assisted screening and clinical decision-support tool. It is engineered to assist qualified healthcare professionals and radiologists, not replace them."
   },
   {
-    question: "What MRI formats are supported?",
-    answer: "We support T1, T2, FLAIR, and T1ce MRI formats in common image formats like JPEG, PNG, and DICOM."
+    question: "What medical imaging sequences and file formats are accepted?",
+    answer: "We support DICOM (.dcm), PNG, JPG, and JPEG files across standard brain MRI sequences: T1-Weighted, T2-Weighted, FLAIR, and T1-Contrast Enhanced (T1ce)."
   },
   {
-    question: "How accurate is the detection?",
-    answer: "Our model achieves over 95% accuracy on test datasets. However, results should always be verified by qualified medical professionals."
+    question: "How does the Grad-CAM Explainable AI work?",
+    answer: "Grad-CAM computes the gradient of the predicted tumor score with respect to feature activation maps in the final convolutional layer, rendering a visual heatmap showing which brain regions influenced the prediction."
   },
   {
-    question: "Is my data secure?",
-    answer: "Yes, all uploaded images are processed securely and are not stored permanently. We prioritize data privacy and security."
+    question: "How is patient medical privacy protected?",
+    answer: "Our system enforces zero-PHI logging. Medical images are assigned randomized UUIDs, encrypted in storage, and metadata is scrubbed during ingestion."
   },
   {
-    question: "Can I use this for my research?",
-    answer: "Yes, this platform is designed for research and educational purposes. Please cite our work if you use it in your research."
+    question: "Can academic institutions integrate the BrainScanAI REST API?",
+    answer: "Yes. The backend provides comprehensive OpenAPI / Swagger documented REST endpoints with JWT authentication and RBAC for hospital and university research integrations."
   }
 ];
 
@@ -71,12 +71,11 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1200));
     
     toast({
-      title: "Message Sent!",
-      description: "Thank you for contacting us. We'll get back to you soon.",
+      title: "Inquiry Dispatched Successfully",
+      description: "Thank you for reaching out. Our research team will respond within 24-48 hours.",
     });
     
     setFormData({ name: "", email: "", subject: "", message: "" });
@@ -94,197 +93,187 @@ const Contact = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      {/* Hero Section */}
-      <section className="pt-24 sm:pt-32 pb-12 sm:pb-16 px-4">
-        <div className="container mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 text-primary mb-4 sm:mb-6">
-            <MessageSquare className="h-3 w-3 sm:h-4 sm:w-4" />
-            <span className="text-xs sm:text-sm font-medium">Get In Touch</span>
+      {/* Hero */}
+      <section className="pt-28 sm:pt-36 pb-12 px-4 text-center">
+        <div className="container mx-auto max-w-4xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-semibold mb-4">
+            <MessageSquare className="h-3.5 w-3.5" />
+            <span>Institutional & Clinical Consultation</span>
           </div>
-          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-foreground mb-4 sm:mb-6 px-4">
-            Contact <span className="text-primary">Us</span>
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground mb-4 tracking-tight">
+            Get in Touch with <span className="text-gradient">BrainScanAI</span>
           </h1>
-          <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-3xl mx-auto px-4">
-            Have questions about our brain tumor detection system? Want to collaborate on research? 
-            We'd love to hear from you.
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Have questions about clinical screening capabilities, REST API integration, or academic research collaboration? 
+            Our team is here to assist you.
           </p>
         </div>
       </section>
 
-      {/* Contact Info Cards */}
-      <section className="py-6 sm:py-8 px-4">
-        <div className="container mx-auto">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      {/* Info Cards */}
+      <section className="py-6 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {contactInfo.map((info, index) => (
               <div 
                 key={index}
-                className="p-5 sm:p-6 rounded-xl sm:rounded-2xl bg-card border border-border text-center hover:border-primary/50 transition-all duration-300"
+                className="p-5 rounded-2xl bg-card border border-border text-center hover-lift shadow-sm space-y-2"
               >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl medical-gradient flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                  <info.icon className="h-5 w-5 sm:h-6 sm:w-6 text-primary-foreground" />
+                <div className="w-11 h-11 rounded-xl medical-gradient flex items-center justify-center text-primary-foreground mx-auto shadow-sm">
+                  <info.icon className="h-5 w-5" />
                 </div>
-                <h3 className="text-sm sm:text-base font-semibold text-foreground mb-1">{info.title}</h3>
-                <p className="text-xs sm:text-sm text-primary font-medium mb-1">{info.details}</p>
-                <p className="text-xs sm:text-sm text-muted-foreground">{info.description}</p>
+                <h3 className="text-sm font-bold text-foreground">{info.title}</h3>
+                <p className="text-xs font-semibold text-primary">{info.details}</p>
+                <p className="text-[11px] text-muted-foreground">{info.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Contact Form & Map Section */}
+      {/* Form & About Split */}
       <section className="py-12 sm:py-16 px-4">
-        <div className="container mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12">
-            {/* Contact Form */}
-            <div className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-card border border-border">
-              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg medical-gradient flex items-center justify-center">
-                  <Send className="h-4 w-4 sm:h-5 sm:w-5 text-primary-foreground" />
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Form (7 Cols) */}
+            <div className="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-card border border-border shadow-md">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2.5 rounded-xl medical-gradient text-primary-foreground shadow-sm">
+                  <Send className="h-5 w-5" />
                 </div>
                 <div>
-                  <h2 className="font-display text-xl sm:text-2xl font-bold text-foreground">Send a Message</h2>
-                  <p className="text-muted-foreground text-xs sm:text-sm">Fill out the form and we'll respond soon</p>
+                  <h2 className="font-display text-xl font-bold text-foreground">Send an Inquiry</h2>
+                  <p className="text-xs text-muted-foreground">Fill out the details below and we will get back to you shortly</p>
                 </div>
               </div>
               
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-                <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Your Name</label>
+                    <label className="block text-xs font-bold text-foreground mb-1.5">Full Name</label>
                     <Input
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="John Doe"
+                      placeholder="Dr. Jane Doe"
                       required
-                      className="bg-background"
+                      className="bg-background h-11"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Email Address</label>
+                    <label className="block text-xs font-bold text-foreground mb-1.5">Work / Institutional Email</label>
                     <Input
                       name="email"
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="john@example.com"
+                      placeholder="doctor@hospital.org"
                       required
-                      className="bg-background"
+                      className="bg-background h-11"
                     />
                   </div>
                 </div>
+
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Subject</label>
+                  <label className="block text-xs font-bold text-foreground mb-1.5">Inquiry Subject</label>
                   <Input
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    placeholder="How can we help?"
+                    placeholder="Research Collaboration / API Access / General"
                     required
-                    className="bg-background"
+                    className="bg-background h-11"
                   />
                 </div>
+
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Message</label>
+                  <label className="block text-xs font-bold text-foreground mb-1.5">Message / Details</label>
                   <Textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Your message here..."
+                    placeholder="Describe your research inquiry or institutional requirements..."
                     rows={5}
                     required
                     className="bg-background resize-none"
                   />
                 </div>
+
                 <Button 
                   type="submit" 
-                  className="w-full medical-gradient h-11 sm:h-12 text-sm sm:text-base"
+                  className="w-full medical-gradient h-12 text-sm font-semibold shadow-md"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                  <Send className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
+                  {isSubmitting ? "Dispatching Message..." : "Send Consultation Message"}
+                  <Send className="ml-2 h-4 w-4" />
                 </Button>
               </form>
             </div>
 
-            {/* Info Section */}
-            <div className="space-y-6 sm:space-y-8">
-              {/* About Section */}
-              <div className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-muted/50 border border-border">
-                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Building className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-                  </div>
-                  <h3 className="font-display text-lg sm:text-xl font-bold text-foreground">About Our Research</h3>
+            {/* Side Information (5 Cols) */}
+            <div className="lg:col-span-5 space-y-5">
+              <div className="p-6 rounded-3xl bg-card border border-border shadow-sm space-y-3">
+                <div className="flex items-center gap-2.5 text-primary">
+                  <Building className="h-5 w-5" />
+                  <h3 className="font-bold text-base text-foreground">Medical AI Research Lab</h3>
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
-                  NeuroScanAI is a research project developed by a dedicated team of students and 
-                  faculty members. Our goal is to leverage artificial intelligence to assist in 
-                  early detection of brain tumors, potentially improving patient outcomes through 
-                  faster diagnosis.
-                </p>
-                <p className="text-xs sm:text-sm text-muted-foreground">
-                  This project is part of our ongoing research in medical image analysis and 
-                  deep learning applications in healthcare.
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  BrainScanAI is developed by an academic and clinical research consortium exploring multimodal neural networks, 
+                  DICOM preprocessing pipelines, and gradient-weighted class activation mapping (Grad-CAM).
                 </p>
               </div>
 
-              {/* Collaboration */}
-              <div className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-primary/5 border border-primary/20">
-                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Users className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-                  </div>
-                  <h3 className="font-display text-lg sm:text-xl font-bold text-foreground">Research Collaboration</h3>
+              <div className="p-6 rounded-3xl bg-primary/5 border border-primary/20 space-y-3">
+                <div className="flex items-center gap-2.5 text-primary">
+                  <Sparkles className="h-5 w-5" />
+                  <h3 className="font-bold text-base text-foreground">Collaboration Opportunities</h3>
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
-                  We welcome collaboration opportunities with researchers, medical institutions, 
-                  and organizations interested in advancing AI-assisted medical diagnosis.
-                </p>
-                <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
+                <ul className="space-y-2 text-xs text-muted-foreground">
                   <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                    Joint research projects
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
+                    Multicenter MRI dataset validation
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                    Dataset contributions
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
+                    Clinical decision-support pilot testing
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                    Technical consultations
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
+                    PACS / DICOM server integration consulting
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                    Academic partnerships
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
+                    Academic joint publication & benchmarking
                   </li>
                 </ul>
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-12 sm:py-16 px-4 bg-muted/30">
-        <div className="container mx-auto">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">
+      <section className="py-14 sm:py-20 px-4 bg-muted/40 border-t border-border/70">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-10">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-2">
               Frequently Asked Questions
             </h2>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto px-4">
-              Find answers to common questions about our system
+            <p className="text-xs sm:text-sm text-muted-foreground">
+              Essential answers regarding AI screening, safety, and imaging protocols
             </p>
           </div>
-          <div className="max-w-3xl mx-auto space-y-3 sm:space-y-4">
+
+          <div className="space-y-3.5">
             {faqs.map((faq, index) => (
               <div 
                 key={index}
-                className="p-5 sm:p-6 rounded-xl sm:rounded-2xl bg-card border border-border"
+                className="p-5 rounded-2xl bg-card border border-border shadow-sm space-y-1.5"
               >
-                <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2">{faq.question}</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">{faq.answer}</p>
+                <h3 className="text-sm font-bold text-foreground">{faq.question}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

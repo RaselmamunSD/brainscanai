@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Bot, User, Trash2 } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User, Trash2, Sparkles, Brain, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import api from "@/services/api";
 
 interface Message {
   id: number;
@@ -11,118 +12,17 @@ interface Message {
   timestamp: Date;
 }
 
-const faqData: { keywords: string[]; answer: string }[] = [
-  {
-    keywords: ["hello", "hi", "hey", "greetings"],
-    answer: "Hello! I'm the Brain Cancer Detection System assistant. How can I help you? You can ask me about brain tumors, MRI scans, or our AI system."
-  },
-  {
-    keywords: ["brain tumor", "tumor", "what is tumor"],
-    answer: "A brain tumor is an abnormal growth of cells in the brain. There are two types: Benign (non-cancerous) and Malignant (cancerous). Common types include: Glioma, Meningioma, and Pituitary tumors. Early detection is crucial for successful treatment."
-  },
-  {
-    keywords: ["glioma"],
-    answer: "Glioma is the most common malignant brain tumor. It originates from glial cells. Severity is determined by grade - from Grade I to Grade IV. Grade IV (Glioblastoma) is the most aggressive form."
-  },
-  {
-    keywords: ["meningioma"],
-    answer: "Meningioma originates from the brain's covering (meninges). In most cases, it's benign and grows slowly. It's usually completely removable through surgery with a good prognosis."
-  },
-  {
-    keywords: ["pituitary"],
-    answer: "Pituitary tumors occur in the pituitary gland. They can affect hormone production. Most pituitary tumors are benign and treatable. Symptoms include vision problems and hormonal changes."
-  },
-  {
-    keywords: ["mri", "scan", "imaging"],
-    answer: "MRI (Magnetic Resonance Imaging) is the most effective method for brain tumor detection. Our system can analyze T1, T2, FLAIR, and T1ce type MRIs. It's non-invasive and radiation-free."
-  },
-  {
-    keywords: ["symptoms", "signs", "warning"],
-    answer: "Common brain tumor symptoms: 1) Headaches (especially in morning), 2) Nausea, 3) Vision problems, 4) Balance issues, 5) Memory problems, 6) Seizures, 7) Personality changes. Consult a doctor immediately if you experience these symptoms."
-  },
-  {
-    keywords: ["treatment", "therapy", "cure"],
-    answer: "Brain tumor treatments include: 1) Surgery - tumor removal, 2) Radiation therapy, 3) Chemotherapy, 4) Targeted therapy, 5) Immunotherapy. Treatment depends on tumor type, location, and grade."
-  },
-  {
-    keywords: ["how", "use", "upload", "work"],
-    answer: "To use our system: 1) Go to 'Upload MRI' page, 2) Upload your MRI image (JPG, PNG, DICOM), 3) Click 'Analyze' button, 4) Get AI analysis results in seconds. Grad-CAM visualization shows which areas were detected."
-  },
-  {
-    keywords: ["accuracy", "reliable", "correct"],
-    answer: "Our AI model has approximately 95% average accuracy. However, remember this is for research and educational purposes only. Always consult a specialist doctor for final diagnosis."
-  },
-  {
-    keywords: ["grad-cam", "gradcam", "visualization", "heatmap"],
-    answer: "Grad-CAM (Gradient-weighted Class Activation Mapping) is an explainable AI technology. It shows which part of the MRI image the AI model focused on to make its decision. In the heatmap: Red = high importance, Blue = low importance."
-  },
-  {
-    keywords: ["team", "who", "developers"],
-    answer: "Our team consists of an experienced supervisor and 5 dedicated researchers. We specialize in medical imaging and deep learning. Visit the 'Team' page for more details."
-  },
-  {
-    keywords: ["thank", "thanks"],
-    answer: "You're welcome! Feel free to ask if you have any more questions. Stay healthy! 🙏"
-  },
-  {
-    keywords: ["ai", "model", "deep learning", "neural network"],
-    answer: "Our system uses a Convolutional Neural Network (CNN) trained on thousands of MRI images. The model can classify four categories: Glioma, Meningioma, Pituitary tumor, and No Tumor. We use transfer learning with state-of-the-art architectures."
-  },
-  {
-    keywords: ["safe", "safety", "radiation"],
-    answer: "MRI scans are completely safe and use no radiation. They use magnetic fields and radio waves. However, inform your doctor if you have metal implants, pacemakers, or are pregnant before getting an MRI."
-  },
-  {
-    keywords: ["diagnosis", "result", "report"],
-    answer: "After uploading your MRI, you'll receive: 1) Tumor classification result, 2) Confidence percentage, 3) Tumor grade (if applicable), 4) Grad-CAM heatmap visualization. Remember: This is for educational purposes - always consult a doctor."
-  },
-  {
-    keywords: ["prevention", "prevent", "avoid"],
-    answer: "While brain tumors can't always be prevented, you can reduce risk by: 1) Avoiding excessive radiation exposure, 2) Maintaining a healthy lifestyle, 3) Regular health checkups, 4) Avoiding known carcinogens, 5) Protecting head from injuries."
-  },
-  {
-    keywords: ["stage", "stages", "grade"],
-    answer: "Brain tumor grades: Grade I - Slow growing, benign. Grade II - Slow growing, can become malignant. Grade III - Malignant, faster growing. Grade IV - Most aggressive, rapidly growing. Grade affects treatment options and prognosis."
-  },
-  {
-    keywords: ["cost", "price", "free"],
-    answer: "Our Brain Cancer Detection System is completely free to use for research and educational purposes. Simply upload your MRI image and get instant AI analysis at no cost."
-  },
-  {
-    keywords: ["contact", "support", "help"],
-    answer: "For support or questions, you can: 1) Use this chatbot, 2) Visit the Team page for contact info, 3) Check our Analytics page for model performance details. We're here to help!"
-  }
-];
-
-const defaultResponse = "Sorry, I didn't understand your question. You can ask about brain tumors, MRI, symptoms, treatment, or our system. For example: 'What is a brain tumor?', 'How do I use it?', 'What is Glioma?'";
-
-const getResponse = (input: string): string => {
-  const lowerInput = input.toLowerCase();
-  
-  for (const faq of faqData) {
-    if (faq.keywords.some(keyword => lowerInput.includes(keyword.toLowerCase()))) {
-      return faq.answer;
-    }
-  }
-  
-  return defaultResponse;
-};
-
-const formatTime = (date: Date): string => {
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-};
-
 // Typing indicator component
 const TypingIndicator = () => (
-  <div className="flex items-start gap-2">
-    <div className="h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 bg-primary/10">
-      <Bot className="h-4 w-4 text-primary" />
+  <div className="flex items-start gap-2 animate-fade-in">
+    <div className="h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 bg-primary/10 border border-primary/20">
+      <Bot className="h-4 w-4 text-primary animate-pulse" />
     </div>
-    <div className="bg-muted p-3 rounded-2xl rounded-tl-none">
-      <div className="flex gap-1">
-        <span className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-        <span className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-        <span className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+    <div className="bg-muted p-3.5 rounded-2xl rounded-tl-none border border-border">
+      <div className="flex items-center gap-1.5">
+        <span className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+        <span className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+        <span className="w-2 h-2 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
       </div>
     </div>
   </div>
@@ -133,10 +33,10 @@ const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Hello! I'm the Brain Cancer Detection System assistant. Feel free to ask me anything about brain tumors, MRI scans, or our AI system.",
+      text: "Hello! I am your BrainScanAI Clinical Intelligence Assistant. Ask me anything about brain MRI scans, tumor classifications (Glioma, Meningioma, Pituitary), or Grad-CAM explainability.",
       isBot: true,
-      timestamp: new Date()
-    }
+      timestamp: new Date(),
+    },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -148,36 +48,54 @@ const Chatbot = () => {
     }
   }, [messages, isTyping]);
 
-  const handleSend = () => {
-    if (!inputValue.trim()) return;
+  const handleSend = async () => {
+    if (!inputValue.trim() || isTyping) return;
 
+    const userText = inputValue.trim();
     const userMessage: Message = {
       id: Date.now(),
-      text: inputValue,
+      text: userText,
       isBot: false,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
-    const userInput = inputValue;
+    setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
     setIsTyping(true);
 
-    // Simulate typing delay
-    setTimeout(() => {
-      setIsTyping(false);
+    // Format previous messages for Gemini context
+    const history = messages.slice(-5).map((m) => ({
+      role: m.isBot ? "model" : "user",
+      text: m.text,
+    }));
+
+    try {
+      const reply = await api.sendChatMessage(userText, history);
       const botResponse: Message = {
         id: Date.now() + 1,
-        text: getResponse(userInput),
+        text: reply,
         isBot: true,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
-      setMessages(prev => [...prev, botResponse]);
-    }, 1000 + Math.random() * 500);
+      setMessages((prev) => [...prev, botResponse]);
+    } catch (err: any) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          text: "I am having trouble connecting to the AI brain right now. Please verify your GEMINI_API_KEY in .env.",
+          isBot: true,
+          timestamp: new Date(),
+        },
+      ]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
       handleSend();
     }
   };
@@ -186,39 +104,52 @@ const Chatbot = () => {
     setMessages([
       {
         id: Date.now(),
-        text: "Hello! I'm the Brain Cancer Detection System assistant. Feel free to ask me anything about brain tumors, MRI scans, or our AI system.",
+        text: "Chat cleared. Feel free to ask me anything about brain tumors, MRI modalities, or Grad-CAM AI.",
         isBot: true,
-        timestamp: new Date()
-      }
+        timestamp: new Date(),
+      },
     ]);
+  };
+
+  const formatTime = (date: Date): string => {
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
   return (
     <>
-      {/* Chat Button */}
+      {/* Floating Trigger Button */}
       <Button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full medical-gradient shadow-lg hover:shadow-xl transition-all duration-300 ${isOpen ? 'scale-0' : 'scale-100'}`}
+        className={`fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full medical-gradient shadow-xl shadow-primary/30 hover:scale-105 transition-all duration-300 ${
+          isOpen ? "scale-0 opacity-0 pointer-events-none" : "scale-100 opacity-100"
+        }`}
         size="icon"
+        title="Open AI Medical Assistant"
       >
-        <MessageCircle className="h-6 w-6" />
+        <MessageCircle className="h-6 w-6 text-primary-foreground" />
       </Button>
 
-      {/* Chat Window */}
+      {/* Floating Chat Window */}
       <div
-        className={`fixed bottom-6 right-6 z-50 w-[380px] h-[500px] bg-card border border-border rounded-2xl shadow-2xl flex flex-col transition-all duration-300 ${
-          isOpen ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
+        className={`fixed bottom-6 right-6 z-50 w-[90vw] sm:w-[400px] h-[540px] bg-card/95 backdrop-blur-2xl border-2 border-primary/30 rounded-3xl shadow-2xl flex flex-col transition-all duration-300 ${
+          isOpen ? "scale-100 opacity-100" : "scale-90 opacity-0 pointer-events-none"
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border medical-gradient rounded-t-2xl">
+        <div className="flex items-center justify-between p-4 border-b border-border/80 medical-gradient rounded-t-[22px] text-primary-foreground">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center">
-              <Bot className="h-5 w-5 text-primary-foreground" />
+            <div className="h-10 w-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner">
+              <Brain className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-primary-foreground">Brain AI Assistant</h3>
-              <p className="text-xs text-primary-foreground/80">Always ready to help</p>
+              <div className="flex items-center gap-1.5">
+                <h3 className="font-bold text-sm leading-none">BrainScan AI Assistant</h3>
+                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/25 font-semibold">Gemini AI</span>
+              </div>
+              <p className="text-[11px] text-primary-foreground/85 mt-0.5 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />
+                Online & Ready
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-1">
@@ -226,8 +157,8 @@ const Chatbot = () => {
               variant="ghost"
               size="icon"
               onClick={handleClearChat}
-              className="text-primary-foreground hover:bg-white/20"
-              title="Clear chat"
+              className="h-8 w-8 text-primary-foreground hover:bg-white/20 rounded-lg"
+              title="Clear conversation"
             >
               <Trash2 className="h-4 w-4" />
             </Button>
@@ -235,43 +166,40 @@ const Chatbot = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(false)}
-              className="text-primary-foreground hover:bg-white/20"
+              className="h-8 w-8 text-primary-foreground hover:bg-white/20 rounded-lg"
+              title="Close chat"
             >
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4" />
             </Button>
           </div>
         </div>
 
-        {/* Messages */}
+        {/* Messages List */}
         <ScrollArea className="flex-1 p-4" ref={scrollRef}>
           <div className="space-y-4">
             {messages.map((message) => (
               <div key={message.id} className="space-y-1">
-                <div
-                  className={`flex items-start gap-2 ${message.isBot ? '' : 'flex-row-reverse'}`}
-                >
+                <div className={`flex items-start gap-2.5 ${message.isBot ? "" : "flex-row-reverse"}`}>
                   <div
-                    className={`h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      message.isBot ? 'bg-primary/10' : 'bg-secondary'
+                    className={`h-7 w-7 rounded-full flex items-center justify-center flex-shrink-0 text-xs ${
+                      message.isBot
+                        ? "bg-primary/10 text-primary border border-primary/20"
+                        : "bg-secondary text-secondary-foreground"
                     }`}
                   >
-                    {message.isBot ? (
-                      <Bot className="h-4 w-4 text-primary" />
-                    ) : (
-                      <User className="h-4 w-4 text-secondary-foreground" />
-                    )}
+                    {message.isBot ? <Bot className="h-3.5 w-3.5" /> : <User className="h-3.5 w-3.5" />}
                   </div>
                   <div
-                    className={`max-w-[75%] p-3 rounded-2xl text-sm ${
+                    className={`max-w-[78%] p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed shadow-sm whitespace-pre-wrap ${
                       message.isBot
-                        ? 'bg-muted text-foreground rounded-tl-none'
-                        : 'medical-gradient text-primary-foreground rounded-tr-none'
+                        ? "bg-muted text-foreground rounded-tl-none border border-border/80"
+                        : "medical-gradient text-primary-foreground rounded-tr-none font-medium"
                     }`}
                   >
                     {message.text}
                   </div>
                 </div>
-                <div className={`text-[10px] text-muted-foreground ${message.isBot ? 'ml-10' : 'mr-10 text-right'}`}>
+                <div className={`text-[10px] text-muted-foreground ${message.isBot ? "ml-10" : "mr-10 text-right"}`}>
                   {formatTime(message.timestamp)}
                 </div>
               </div>
@@ -280,26 +208,29 @@ const Chatbot = () => {
           </div>
         </ScrollArea>
 
-        {/* Input */}
-        <div className="p-4 border-t border-border">
+        {/* Input Bar */}
+        <div className="p-3.5 border-t border-border/80 bg-card/80 rounded-b-[22px]">
           <div className="flex items-center gap-2">
             <Input
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Type your question..."
-              className="flex-1"
+              onKeyDown={handleKeyPress}
+              placeholder="Ask anything about MRI or tumors..."
+              className="flex-1 bg-background text-xs sm:text-sm h-10 rounded-xl"
               disabled={isTyping}
             />
             <Button
               onClick={handleSend}
               size="icon"
-              className="medical-gradient"
+              className="medical-gradient h-10 w-10 shrink-0 rounded-xl shadow-md"
               disabled={!inputValue.trim() || isTyping}
             >
-              <Send className="h-4 w-4" />
+              {isTyping ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
             </Button>
           </div>
+          <p className="text-[10px] text-muted-foreground text-center mt-2">
+            AI screening decision support • Set <code>GEMINI_API_KEY</code> in .env for custom AI
+          </p>
         </div>
       </div>
     </>

@@ -76,9 +76,13 @@ const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
                 <span className="break-all text-center">{member.studentId}</span>
               </div>
               
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
-                <GraduationCap className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
-                <span className="text-center break-words px-2">{member.university}</span>
+              <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                <img 
+                  src="/bubt-logo.png" 
+                  alt="BUBT Logo" 
+                  className="h-4 w-4 sm:h-5 sm:w-5 object-contain shrink-0" 
+                />
+                <span className="text-center break-words px-1 font-medium">{member.university}</span>
               </div>
               
               <a 
