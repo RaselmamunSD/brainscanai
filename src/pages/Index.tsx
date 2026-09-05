@@ -276,7 +276,7 @@ const Index = () => {
           <div className="flex items-start sm:items-center justify-center gap-3 text-center">
             <ShieldAlert className="h-5 w-5 text-warning shrink-0 mt-0.5 sm:mt-0" />
             <p className="text-xs sm:text-sm text-muted-foreground">
-              <strong className="text-warning">Important Medical Disclaimer:</strong> BrainScanAI is an AI-assisted screening and decision-support tool. It does not provide autonomous medical diagnoses. All outputs must be evaluated and confirmed by a licensed medical doctor or certified radiologist.
+              <strong className="text-warning">Important Medical Disclaimer:</strong> TumorMultiNetAI is an AI-assisted screening and decision-support tool. It does not provide autonomous medical diagnoses. All outputs must be evaluated and confirmed by a licensed medical doctor or certified radiologist.
             </p>
           </div>
         </div>

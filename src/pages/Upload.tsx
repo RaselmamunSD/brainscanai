@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, Brain, RefreshCw, Download, Sparkles, Activity, ShieldCheck, FileCheck, Layers } from "lucide-react";
+import { ArrowLeft, Brain, RefreshCw, Download, Sparkles, Activity, ShieldCheck, FileCheck, Layers, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -73,12 +73,6 @@ const Upload = () => {
               <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                 Upload brain MRI scans for multimodal neural network classification & Grad-CAM visual interpretability
               </p>
-            </div>
-
-            {/* Quick Status Tag */}
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-card border border-border text-xs font-semibold shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>PyTorch Engine 2.4 Ready</span>
             </div>
           </div>
 
@@ -200,8 +194,12 @@ const Upload = () => {
 
               {/* Error Message */}
               {error && (
-                <div className="bg-destructive/10 border border-destructive/30 rounded-xl p-4 text-xs sm:text-sm text-destructive font-medium">
-                  {error}
+                <div className="bg-destructive/10 border border-destructive/30 rounded-2xl p-4 text-xs sm:text-sm text-destructive flex items-start gap-3 shadow-sm animate-fade-in">
+                  <AlertCircle className="h-5 w-5 shrink-0 text-destructive mt-0.5" />
+                  <div className="space-y-1">
+                    <h4 className="font-bold text-destructive">Image Verification Alert</h4>
+                    <p className="leading-relaxed">{error}</p>
+                  </div>
                 </div>
               )}
             </div>
@@ -239,7 +237,7 @@ const Upload = () => {
           {/* Clinical Disclaimer Bottom Pill */}
           <div className="mt-10 p-3.5 bg-warning/5 border border-warning/20 rounded-xl text-center">
             <p className="text-xs text-muted-foreground">
-              <strong className="text-warning font-semibold">Regulatory Notice:</strong> BrainScanAI is an AI-assisted screening decision-support tool. It does not replace diagnostic assessment by a certified radiologist or qualified medical specialist.
+              <strong className="text-warning font-semibold">Regulatory Notice:</strong> TumorMultiNetAI is an AI-assisted screening decision-support tool. It does not replace diagnostic assessment by a certified radiologist or qualified medical specialist.
             </p>
           </div>
 

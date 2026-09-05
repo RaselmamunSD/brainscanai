@@ -14,22 +14,13 @@ const Footer = () => {
                 <Brain className="h-5 w-5" />
               </div>
               <span className="font-display font-extrabold text-xl text-foreground">
-                BrainScan<span className="text-primary">AI</span>
+                TumorMultiNet<span className="text-primary">AI</span>
               </span>
             </Link>
             <p className="text-xs sm:text-sm text-muted-foreground max-w-sm leading-relaxed">
               Clinical decision-support platform engineered for multimodal brain MRI analysis, 
               automated tumor screening, and transparent <strong>Grad-CAM</strong> visual interpretability.
             </p>
-            <div className="flex items-center gap-3 pt-2 text-xs text-muted-foreground">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold border border-emerald-500/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Backend API Online
-              </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary font-semibold border border-primary/20">
-                PyTorch 2.4 Ready
-              </span>
-            </div>
           </div>
 
           {/* Col 3: Platform Links */}
@@ -97,7 +88,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-border/70 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} BrainScanAI Research Group. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} TumorMultiNetAI Research Group. All rights reserved.</p>
           <p className="text-center sm:text-right">
             Developed for AI-Assisted Medical Screening & Clinical Decision Support.
           </p>

@@ -29,7 +29,7 @@ const Team = () => {
               Medical & AI Research Team
             </h1>
             <p className="text-xs sm:text-sm md:text-base text-muted-foreground max-w-2xl mt-1">
-              Meet the researchers, engineers, and faculty behind the BrainScanAI multimodal brain tumor classification platform
+              Meet the researchers, engineers, and faculty behind the TumorMultiNetAI multimodal brain tumor classification platform
             </p>
           </div>
 
@@ -44,7 +44,7 @@ const Team = () => {
                   <h2 className="text-xl font-bold text-foreground">Project Vision</h2>
                 </div>
                 <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                  BrainScanAI is dedicated to developing transparent, high-accuracy deep learning systems for early brain tumor screening and localization. 
+                  TumorMultiNetAI is dedicated to developing transparent, high-accuracy deep learning systems for early brain tumor screening and localization. 
                   Our system assists radiologists by providing standardized screening labels and explainable <strong>Grad-CAM</strong> visual attention heatmaps.
                 </p>
                 <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">

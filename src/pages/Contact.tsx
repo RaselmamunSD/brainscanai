@@ -11,7 +11,7 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Research Inquiries",
-    details: "contact@brainscan.ai",
+    details: "contact@tumormultinet.ai",
     description: "Email our laboratory directly"
   },
   {
@@ -36,8 +36,8 @@ const contactInfo = [
 
 const faqs = [
   {
-    question: "Is BrainScanAI approved as an autonomous medical diagnostic device?",
-    answer: "No. BrainScanAI is strictly an AI-assisted screening and clinical decision-support tool. It is engineered to assist qualified healthcare professionals and radiologists, not replace them."
+    question: "Is TumorMultiNetAI approved as an autonomous medical diagnostic device?",
+    answer: "No. TumorMultiNetAI is strictly an AI-assisted screening and clinical decision-support tool. It is engineered to assist qualified healthcare professionals and radiologists, not replace them."
   },
   {
     question: "What medical imaging sequences and file formats are accepted?",
@@ -52,7 +52,7 @@ const faqs = [
     answer: "Our system enforces zero-PHI logging. Medical images are assigned randomized UUIDs, encrypted in storage, and metadata is scrubbed during ingestion."
   },
   {
-    question: "Can academic institutions integrate the BrainScanAI REST API?",
+    question: "Can academic institutions integrate the TumorMultiNetAI REST API?",
     answer: "Yes. The backend provides comprehensive OpenAPI / Swagger documented REST endpoints with JWT authentication and RBAC for hospital and university research integrations."
   }
 ];

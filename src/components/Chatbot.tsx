@@ -33,7 +33,7 @@ const Chatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Hello! I am your BrainScanAI Clinical Intelligence Assistant. Ask me anything about brain MRI scans, tumor classifications (Glioma, Meningioma, Pituitary), or Grad-CAM explainability.",
+      text: "Hello! I am your TumorMultiNetAI Clinical Intelligence Assistant. Ask me anything about brain MRI scans, tumor classifications (Glioma, Meningioma, Pituitary), or Grad-CAM explainability.",
       isBot: true,
       timestamp: new Date(),
     },
@@ -83,7 +83,7 @@ const Chatbot = () => {
         ...prev,
         {
           id: Date.now() + 1,
-          text: "I am having trouble connecting to the AI brain right now. Please verify your GEMINI_API_KEY in .env.",
+          text: "I am having trouble connecting to the medical intelligence assistant right now. Please check your network connection and try again.",
           isBot: true,
           timestamp: new Date(),
         },
@@ -143,8 +143,8 @@ const Chatbot = () => {
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <h3 className="font-bold text-sm leading-none">BrainScan AI Assistant</h3>
-                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/25 font-semibold">Gemini AI</span>
+                <h3 className="font-bold text-sm leading-none">TumorMultiNetAI Assistant</h3>
+                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/25 font-semibold">Neural AI</span>
               </div>
               <p className="text-[11px] text-primary-foreground/85 mt-0.5 flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />
@@ -229,7 +229,7 @@ const Chatbot = () => {
             </Button>
           </div>
           <p className="text-[10px] text-muted-foreground text-center mt-2">
-            AI screening decision support • Set <code>GEMINI_API_KEY</code> in .env for custom AI
+            AI screening decision support • TumorMultiNet Intelligence Engine
           </p>
         </div>
       </div>

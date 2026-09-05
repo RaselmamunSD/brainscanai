@@ -31,7 +31,7 @@ const Header = () => {
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="font-display font-extrabold text-xl text-foreground tracking-tight">
-                  BrainScan<span className="text-primary">AI</span>
+                  TumorMultiNet<span className="text-primary">AI</span>
                 </span>
                 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-bold border border-primary/20">
                   PRO
