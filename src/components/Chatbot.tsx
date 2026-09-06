@@ -41,6 +41,38 @@ const Chatbot = () => {
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const chatWindowRef = useRef<HTMLDivElement>(null);
+
+  // Close on Escape key or click outside
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (
+        isOpen &&
+        chatWindowRef.current &&
+        !chatWindowRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -117,59 +149,73 @@ const Chatbot = () => {
 
   return (
     <>
-      {/* Floating Trigger Button */}
+      {/* Backdrop for easy tap-to-close on mobile and desktop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-xs z-40 transition-opacity duration-300"
+          onClick={() => setIsOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Floating Trigger / Toggle Button */}
       <Button
-        onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full medical-gradient shadow-xl shadow-primary/30 hover:scale-105 transition-all duration-300 ${
-          isOpen ? "scale-0 opacity-0 pointer-events-none" : "scale-100 opacity-100"
-        }`}
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 h-14 w-14 rounded-full medical-gradient shadow-xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer"
         size="icon"
-        title="Open AI Medical Assistant"
+        title={isOpen ? "Close Assistant" : "Open AI Medical Assistant"}
+        aria-label={isOpen ? "Close Assistant" : "Open AI Medical Assistant"}
       >
-        <MessageCircle className="h-6 w-6 text-primary-foreground" />
+        {isOpen ? (
+          <X className="h-6 w-6 text-primary-foreground animate-in spin-in-180 duration-200" />
+        ) : (
+          <MessageCircle className="h-6 w-6 text-primary-foreground" />
+        )}
       </Button>
 
       {/* Floating Chat Window */}
       <div
-        className={`fixed bottom-6 right-6 z-50 w-[90vw] sm:w-[400px] h-[540px] bg-card/95 backdrop-blur-2xl border-2 border-primary/30 rounded-3xl shadow-2xl flex flex-col transition-all duration-300 ${
+        ref={chatWindowRef}
+        className={`fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[420px] max-h-[calc(100dvh-7rem)] h-[540px] bg-card/95 backdrop-blur-2xl border-2 border-primary/30 rounded-3xl shadow-2xl flex flex-col transition-all duration-300 ${
           isOpen ? "scale-100 opacity-100" : "scale-90 opacity-0 pointer-events-none"
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border/80 medical-gradient rounded-t-[22px] text-primary-foreground">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner">
+        <div className="flex items-center justify-between p-3.5 sm:p-4 border-b border-border/80 medical-gradient rounded-t-[22px] text-primary-foreground">
+          <div className="flex items-center gap-2.5">
+            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner shrink-0">
               <Brain className="h-5 w-5" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <h3 className="font-bold text-sm leading-none">TumorMultiNetAI Assistant</h3>
+                <h3 className="font-bold text-xs sm:text-sm leading-none">TumorMultiNetAI</h3>
                 <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/25 font-semibold">Neural AI</span>
               </div>
-              <p className="text-[11px] text-primary-foreground/85 mt-0.5 flex items-center gap-1">
+              <p className="text-[10px] sm:text-[11px] text-primary-foreground/85 mt-0.5 flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />
                 Online & Ready
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             <Button
               variant="ghost"
               size="icon"
               onClick={handleClearChat}
-              className="h-8 w-8 text-primary-foreground hover:bg-white/20 rounded-lg"
+              className="h-8 w-8 text-primary-foreground hover:bg-white/20 rounded-lg shrink-0"
               title="Clear conversation"
             >
               <Trash2 className="h-4 w-4" />
             </Button>
             <Button
               variant="ghost"
-              size="icon"
+              size="sm"
               onClick={() => setIsOpen(false)}
-              className="h-8 w-8 text-primary-foreground hover:bg-white/20 rounded-lg"
-              title="Close chat"
+              className="h-8 px-2.5 bg-white/20 hover:bg-white/30 text-primary-foreground rounded-lg flex items-center gap-1 text-xs font-semibold shadow-xs cursor-pointer shrink-0"
+              title="Close chat window"
             >
               <X className="h-4 w-4" />
+              <span>Close</span>
             </Button>
           </div>
         </div>
