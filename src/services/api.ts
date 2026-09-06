@@ -47,6 +47,10 @@ export interface ApiPredictionResponse {
   model_name?: string;
   model_version?: string;
   processing_time_ms?: number;
+  gradcam_url?: string;
+  overlay_url?: string;
+  box_2d?: number[];
+  anatomical_location?: string;
   disclaimer: string;
 }
 

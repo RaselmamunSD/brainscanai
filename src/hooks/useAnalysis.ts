@@ -122,6 +122,8 @@ export const useAnalysis = (): UseAnalysisReturn => {
         screeningLabel: pred.screening_label,
         disclaimer: apiData.disclaimer,
         modelVersion: apiData.model_version || "1.0.0",
+        gradcamUrl: apiData.gradcam_url ? api.getFileUrl(apiData.gradcam_url) : undefined,
+        overlayUrl: apiData.overlay_url ? api.getFileUrl(apiData.overlay_url) : undefined,
       };
 
       setProgress(100);
