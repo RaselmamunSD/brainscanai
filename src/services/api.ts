@@ -306,9 +306,6 @@ Return JSON:
             "Content-Type": "application/json",
             "x-goog-api-key": directApiKey,
           };
-          if (directApiKey.startsWith("AQ.")) {
-            headers["Authorization"] = `Bearer ${directApiKey}`;
-          }
 
           const res = await fetch(url, {
             method: "POST",
@@ -470,9 +467,6 @@ Return JSON:
           "Content-Type": "application/json",
           "x-goog-api-key": directApiKey,
         };
-        if (directApiKey.startsWith("AQ.")) {
-          headers["Authorization"] = `Bearer ${directApiKey}`;
-        }
         const res = await fetch(url, {
           method: "POST",
           headers,
