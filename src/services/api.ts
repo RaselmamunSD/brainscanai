@@ -301,11 +301,11 @@ Return JSON:
   }
 }
 `;
-          const url = directApiKey.startsWith("AQ.")
-            ? "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
-            : `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${directApiKey}`;
-
-          const headers: Record<string, string> = { "Content-Type": "application/json" };
+          const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent";
+          const headers: Record<string, string> = {
+            "Content-Type": "application/json",
+            "x-goog-api-key": directApiKey,
+          };
           if (directApiKey.startsWith("AQ.")) {
             headers["Authorization"] = `Bearer ${directApiKey}`;
           }
@@ -465,10 +465,11 @@ Return JSON:
         }
         contents.push({ role: "user", parts: [{ text: message }] });
 
-        const url = directApiKey.startsWith("AQ.")
-          ? "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
-          : `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${directApiKey}`;
-        const headers: Record<string, string> = { "Content-Type": "application/json" };
+        const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent";
+        const headers: Record<string, string> = {
+          "Content-Type": "application/json",
+          "x-goog-api-key": directApiKey,
+        };
         if (directApiKey.startsWith("AQ.")) {
           headers["Authorization"] = `Bearer ${directApiKey}`;
         }
