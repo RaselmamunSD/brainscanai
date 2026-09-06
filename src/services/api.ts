@@ -3,8 +3,15 @@
  * Connects frontend with FastAPI + PyTorch backend.
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-const API_V1_URL = import.meta.env.VITE_API_V1_URL || `${API_BASE_URL}/api/v1`;
+const envBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = (envBaseUrl !== undefined && envBaseUrl !== null && envBaseUrl !== "")
+  ? envBaseUrl
+  : (import.meta.env.PROD ? "" : "http://localhost:8000");
+
+const envV1Url = import.meta.env.VITE_API_V1_URL;
+const API_V1_URL = (envV1Url !== undefined && envV1Url !== null && envV1Url !== "")
+  ? envV1Url
+  : `${API_BASE_URL}/api/v1`;
 
 export interface ApiUser {
   id: string;
@@ -290,6 +297,10 @@ Return JSON:
   }
 }
 `;
+          const url = directApiKey.startsWith("AQ.")
+            ? "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+            : `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${directApiKey}`;
+
           const headers: Record<string, string> = { "Content-Type": "application/json" };
           if (directApiKey.startsWith("AQ.")) {
             headers["Authorization"] = `Bearer ${directApiKey}`;
@@ -450,10 +461,16 @@ Return JSON:
         }
         contents.push({ role: "user", parts: [{ text: message }] });
 
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${directApiKey}`;
+        const url = directApiKey.startsWith("AQ.")
+          ? "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+          : `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${directApiKey}`;
+        const headers: Record<string, string> = { "Content-Type": "application/json" };
+        if (directApiKey.startsWith("AQ.")) {
+          headers["Authorization"] = `Bearer ${directApiKey}`;
+        }
         const res = await fetch(url, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers,
           body: JSON.stringify({
             contents,
             systemInstruction: {
